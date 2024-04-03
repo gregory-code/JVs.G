@@ -14,6 +14,7 @@ public class CharacterBase : MonoBehaviour
     private Animator animator;
 
     [SerializeField] private bool isPlayer1;
+    [SerializeField] private bool isDummy;
     [SerializeField] private float jumpHeight;
     [SerializeField] private float runSpeed;
 
@@ -23,6 +24,9 @@ public class CharacterBase : MonoBehaviour
     private bool isGrounded;
     private bool isIncapacitated;
     private bool isDead;
+
+    private bool canAttack = true;
+    private CharacterBase otherGuy;
 
     private int maxHealth = 100;
     private int currentHealth = 100;
@@ -44,6 +48,8 @@ public class CharacterBase : MonoBehaviour
         healthBar = GameObject.Find(ID + "health").GetComponent<Image>();
         meterBar = GameObject.Find(ID + "special").GetComponent<Image>();
         meterBarText = GameObject.Find(ID + "MeterText").GetComponent<TextMeshProUGUI>();
+
+        otherGuy = (isPlayer1) ? GameObject.FindGameObjectWithTag("P2").GetComponent<CharacterBase>() : GameObject.FindGameObjectWithTag("P1").GetComponent<CharacterBase>() ;
     }
 
     void Update()
@@ -115,6 +121,16 @@ public class CharacterBase : MonoBehaviour
         }
     }
 
+    public bool CanAttack()
+    {
+        return canAttack;
+    }
+
+    public CharacterBase OtherPlayer()
+    {
+        return otherGuy;
+    }
+
     public void ApplyDamage(int damage)
     {
         if (damage <= 0 || isDead == true)
@@ -162,6 +178,7 @@ public class CharacterBase : MonoBehaviour
     IEnumerator IncapacitatedDuration(float duration)
     {
         isIncapacitated = true;
+        canAttack = false;
 
         while (duration > 0)
         {
@@ -169,6 +186,7 @@ public class CharacterBase : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
+        canAttack = true;
         isIncapacitated = false;
 
     }
