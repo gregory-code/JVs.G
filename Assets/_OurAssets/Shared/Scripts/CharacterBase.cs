@@ -18,8 +18,14 @@ public class CharacterBase : MonoBehaviour
     [SerializeField] private float jumpHeight;
     [SerializeField] private float runSpeed;
 
+    [SerializeField] private float testX;
+    [SerializeField] private float testY;
+
     private Vector3 playerVelocity;
     private Vector3 moveDirection;
+
+    private float knockback_X;
+    private float knockback_Y;
 
     private bool isGrounded;
     private bool isIncapacitated;
@@ -55,8 +61,8 @@ public class CharacterBase : MonoBehaviour
     void Update()
     {
         GroundCheck();
+        HandleKnockback();
         Gravity();
-
 
         if (isIncapacitated)
             return;
@@ -80,14 +86,36 @@ public class CharacterBase : MonoBehaviour
         Vector3 dir = new Vector3(0, -1);
 
         isGrounded = (Physics.Raycast(transform.position, dir, out check, distance));
+        animator.SetBool("grounded", isGrounded);
     }
 
-    private void Movement()
+    private void HandleKnockback()
     {
-        Vector2 inputVector = playerInput.Player.Movement.ReadValue<Vector2>();
-        moveDirection = new Vector3(inputVector.x, 0, inputVector.y);
+        if(knockback_X <= 0.6f && knockback_Y <= 0.6f)
+        {
+            knockback_X = 0;
+            knockback_Y = 0;
+            return;
+        }
 
-        characterController.Move(transform.TransformDirection(moveDirection) * runSpeed * Time.deltaTime);
+        Debug.Log("Moving");
+
+        Vector3 knockbackForward = Vector3.zero;
+        knockbackForward.x = 1;
+        if (knockback_X <= 0.6f)
+            knockbackForward.x = 0;
+
+        characterController.Move(knockbackForward * knockback_X * Time.deltaTime);
+        knockback_X -= Time.deltaTime * 3;
+
+        Vector3 knockbackUp = Vector3.zero;
+        knockbackUp.y = 1;
+        if (knockback_Y <= 0.6f)
+            knockbackUp.y = 0;
+
+
+        characterController.Move(knockbackUp * knockback_Y * Time.deltaTime);
+        knockback_Y -= Time.deltaTime * 5;
     }
 
     private void Gravity()
@@ -100,6 +128,14 @@ public class CharacterBase : MonoBehaviour
         }
 
         characterController.Move(playerVelocity * Time.deltaTime);
+    }
+
+    private void Movement()
+    {
+        Vector2 inputVector = playerInput.Player.Movement.ReadValue<Vector2>();
+        moveDirection = new Vector3(inputVector.x, 0, inputVector.y);
+
+        characterController.Move(transform.TransformDirection(moveDirection) * runSpeed * Time.deltaTime);
     }
 
     private void AirMomentum()
@@ -116,7 +152,8 @@ public class CharacterBase : MonoBehaviour
         {
             if (isGrounded)
             {
-                playerVelocity.y = Mathf.Sqrt(jumpHeight * -3 * -20);
+                //playerVelocity.y = Mathf.Sqrt(jumpHeight * -3 * -20);
+                ApplyKnockback(testX, testY);
             }
         }
     }
@@ -150,22 +187,22 @@ public class CharacterBase : MonoBehaviour
     {
         StopAllCoroutines();
 
-        if(!isGrounded)
-        {
-            StartCoroutine(IncapacitatedDuration(0.4f));
-            animator.SetTrigger("flinchAir");
-            return;
-        }
-
         string flinchType = (headShot) ? "flinchHead" : "flinchBody" ;
         float flinchDuration = (headShot) ? 0.6f : 0.3f ;
+
+        if (!isGrounded)
+        {
+            flinchDuration = 0.4f;
+        }
+
         StartCoroutine(IncapacitatedDuration(flinchDuration));
         animator.SetTrigger(flinchType);
     }
 
     public void ApplyKnockback(float horizontalKnockback, float verticalKnockback)
     {
-
+        knockback_X = horizontalKnockback;
+        knockback_Y = verticalKnockback;
     }
 
     public void ApplyGrab()
