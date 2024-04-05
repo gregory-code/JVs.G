@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 80c1e67ec4bb4a340b52ee695cf26219
+guid: e7c09d19635d9c34da6d3c9d303f0be8
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -24,7 +24,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -33,18 +33,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: JumpUp
+      name: Short
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 24.6
-      lastFrame: 50
+      firstFrame: 0
+      lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1

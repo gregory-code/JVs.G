@@ -23,7 +23,7 @@ public class FightCamera : MonoBehaviour
         Vector3 P2pos = P2.transform.position;
         Vector3 pos = (P1pos + P2pos) / 2;
 
-        pos.y = (Vector3.Distance(P1pos, P2pos) <= 5f) ? (pos.y * 1.2f) + y : y ;
+        pos.y = (Vector3.Distance(P1pos, P2pos) <= 5f) ? (pos.y * 0.7f) + y : y ;
         pos.z = (Mathf.Abs(pos.x) * -1) + z;
 
         transform.position = Vector3.Lerp(transform.position, pos, 7 * Time.deltaTime);

@@ -30,16 +30,19 @@ public class CharacterBase : MonoBehaviour
     private bool isGrounded;
     private bool isIncapacitated;
     private bool isDead;
+    private bool facingRight;
+
+    private float currentAnimSpeed;
 
     private bool canAttack = true;
     private CharacterBase otherGuy;
 
-    private int maxHealth = 100;
-    private int currentHealth = 100;
+    private float maxHealth = 100;
+    private float currentHealth = 100;
     private Image healthBar;
 
-    private int maxMeter = 100;
-    private int currentMeter = 100;
+    private float maxMeter = 100;
+    private float currentMeter = 0;
     private Image meterBar;
     private TextMeshProUGUI meterBarText;
 
@@ -55,6 +58,10 @@ public class CharacterBase : MonoBehaviour
         meterBar = GameObject.Find(ID + "special").GetComponent<Image>();
         meterBarText = GameObject.Find(ID + "MeterText").GetComponent<TextMeshProUGUI>();
 
+        healthBar.fillAmount = 1;
+        meterBar.fillAmount = 0;
+        meterBarText.text = "Meter: " + currentMeter + "%";
+
         otherGuy = (isPlayer1) ? GameObject.FindGameObjectWithTag("P2").GetComponent<CharacterBase>() : GameObject.FindGameObjectWithTag("P1").GetComponent<CharacterBase>() ;
     }
 
@@ -63,9 +70,12 @@ public class CharacterBase : MonoBehaviour
         GroundCheck();
         HandleKnockback();
         Gravity();
+        ManageBars();
 
         if (isIncapacitated)
             return;
+
+        FaceEnemy();
 
         if (isGrounded)
         {
@@ -75,6 +85,12 @@ public class CharacterBase : MonoBehaviour
         {
             AirMomentum();
         }
+    }
+
+    private void ManageBars()
+    {
+        healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, currentHealth / maxHealth, 10 * Time.deltaTime);
+        meterBar.fillAmount = Mathf.Lerp(meterBar.fillAmount, currentMeter / maxMeter, 10 * Time.deltaTime);
     }
 
     private void GroundCheck()
@@ -98,8 +114,6 @@ public class CharacterBase : MonoBehaviour
             return;
         }
 
-        Debug.Log("Moving");
-
         Vector3 knockbackForward = Vector3.zero;
         knockbackForward.x = 1;
         if (knockback_X <= 0.6f)
@@ -115,7 +129,7 @@ public class CharacterBase : MonoBehaviour
 
 
         characterController.Move(knockbackUp * knockback_Y * Time.deltaTime);
-        knockback_Y -= Time.deltaTime * 5;
+        knockback_Y -= Time.deltaTime * 3;
     }
 
     private void Gravity()
@@ -124,10 +138,28 @@ public class CharacterBase : MonoBehaviour
 
         if (isGrounded && playerVelocity.y < 0)
         {
-            playerVelocity.y = -2f;
+            playerVelocity.y = -3f;
         }
 
         characterController.Move(playerVelocity * Time.deltaTime);
+    }
+
+    private void FaceEnemy()
+    {
+        Vector3 faceDir = (otherGuy.transform.position - transform.position).normalized;
+        Vector3 crossDir = Vector3.Cross(faceDir, transform.forward);
+
+        if(crossDir.y > 0)
+        {
+            facingRight = false;
+        }
+        else
+        {
+            facingRight = true;
+        }
+
+        Vector3 rotateDir = (facingRight) ? Vector3.one : new Vector3(-1,1,-1) ;
+        transform.localScale = Vector3.Lerp(transform.localScale, rotateDir, 12 * Time.deltaTime);
     }
 
     private void Movement()
@@ -136,6 +168,14 @@ public class CharacterBase : MonoBehaviour
         moveDirection = new Vector3(inputVector.x, 0, inputVector.y);
 
         characterController.Move(transform.TransformDirection(moveDirection) * runSpeed * Time.deltaTime);
+
+        float speed = characterController.velocity.x;
+        if (facingRight == false)
+            speed *= -1;
+
+        currentAnimSpeed = Mathf.Lerp(currentAnimSpeed, speed, 10 * Time.deltaTime);
+
+        animator.SetFloat("Speed", currentAnimSpeed);
     }
 
     private void AirMomentum()
@@ -152,10 +192,17 @@ public class CharacterBase : MonoBehaviour
         {
             if (isGrounded)
             {
-                //playerVelocity.y = Mathf.Sqrt(jumpHeight * -3 * -20);
-                ApplyKnockback(testX, testY);
+                StartCoroutine(SquatFrames());
+                animator.SetTrigger("jump");
             }
         }
+    }
+
+    private IEnumerator SquatFrames()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        playerVelocity.y = Mathf.Sqrt(jumpHeight * -3 * -20);
     }
 
     public bool CanAttack()
@@ -168,15 +215,23 @@ public class CharacterBase : MonoBehaviour
         return otherGuy;
     }
 
-    public void ApplyDamage(int damage)
+    public void ApplyDamage(float damage)
     {
         if (damage <= 0 || isDead == true)
             return;
 
-        currentHealth -= damage;
-        healthBar.fillAmount = currentHealth / maxHealth;
+        if(currentAnimSpeed <= -0.6f)
+        {
+            animator.SetTrigger("guard");
+            StartCoroutine(IncapacitatedDuration(0.5f));
+            AddMeter(damage / 2);
+            return;
+        }
 
-        if(currentHealth <= 0)
+        AddMeter(damage);
+        currentHealth -= damage;
+
+        if (currentHealth <= 0)
         {
             isDead = true;
             animator.SetTrigger("death");
@@ -192,6 +247,7 @@ public class CharacterBase : MonoBehaviour
 
         if (!isGrounded)
         {
+            flinchType = "flinchBody";
             flinchDuration = 0.4f;
         }
 
@@ -228,15 +284,22 @@ public class CharacterBase : MonoBehaviour
 
     }
 
-    public bool TryUseMeter(int meterCost)
+    public bool TryUseMeter(float meterCost)
     {
         if(currentMeter > meterCost)
         {
             currentMeter -= meterCost;
-            meterBar.fillAmount = currentMeter / maxMeter;
+            meterBarText.text = "Meter: " + currentMeter + "%";
             return true;
         }
 
         return false;
+    }
+
+    public void AddMeter(float meterAdded)
+    {
+        currentMeter += meterAdded;
+        currentMeter = Mathf.Clamp(currentMeter, 0, maxMeter);
+        meterBarText.text = "Meter: " + currentMeter + "%";
     }
 }
