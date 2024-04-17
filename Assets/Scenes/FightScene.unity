@@ -929,7 +929,8 @@ MonoBehaviour:
   isPlayer1: 1
   isDummy: 0
   jumpHeight: 1.2
-  runSpeed: 4
+  runSpeed: 6.5
+  backSpeed: 2
   testX: 0
   testY: 0
 --- !u!114 &205079738
@@ -978,6 +979,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b697cc66-f308-4233-b7ed-243f36eb2568
     m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 205079737}
+        m_TargetAssemblyTypeName: CharacterBase, Assembly-CSharp
+        m_MethodName: Attack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: cd862a00-b0c0-49b2-9ba3-64bc37d3a429
+    m_ActionName: Player/Attack[/Keyboard/p]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 205079737}
+        m_TargetAssemblyTypeName: CharacterBase, Assembly-CSharp
+        m_MethodName: HoldingUp
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: dd5107a7-288b-4c25-a80d-0d2302921433
+    m_ActionName: Player/HoldingUp[/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 205079737}
+        m_TargetAssemblyTypeName: CharacterBase, Assembly-CSharp
+        m_MethodName: HoldingDown
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3e212549-d2e7-4b3d-882d-ecaf5b35ec13
+    m_ActionName: Player/HoldingDown[/Keyboard/d]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -3866,6 +3915,7 @@ MonoBehaviour:
   isDummy: 1
   jumpHeight: 0
   runSpeed: 0
+  backSpeed: 0
   testX: 0
   testY: 0
 --- !u!114 &1486559864

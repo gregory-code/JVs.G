@@ -17,9 +17,13 @@ public class CharacterBase : MonoBehaviour
     [SerializeField] private bool isDummy;
     [SerializeField] private float jumpHeight;
     [SerializeField] private float runSpeed;
+    [SerializeField] private float backSpeed;
 
     [SerializeField] private float testX;
     [SerializeField] private float testY;
+
+    private bool isHoldingUp;
+    private bool isHoldingDown;
 
     private Vector3 playerVelocity;
     private Vector3 moveDirection;
@@ -164,18 +168,84 @@ public class CharacterBase : MonoBehaviour
 
     private void Movement()
     {
+        if (isHoldingDown)
+            return;
+
         Vector2 inputVector = playerInput.Player.Movement.ReadValue<Vector2>();
         moveDirection = new Vector3(inputVector.x, 0, inputVector.y);
 
-        characterController.Move(transform.TransformDirection(moveDirection) * runSpeed * Time.deltaTime);
+        float moveSpeed = runSpeed;
+
+        if (inputVector.x < 0 && facingRight)
+            moveSpeed = backSpeed;
+
+        if (inputVector.x > 0 && !facingRight)
+            moveSpeed = backSpeed;
+
+        characterController.Move(transform.TransformDirection(moveDirection) * moveSpeed * Time.deltaTime);
 
         float speed = characterController.velocity.x;
         if (facingRight == false)
             speed *= -1;
 
-        currentAnimSpeed = Mathf.Lerp(currentAnimSpeed, speed, 10 * Time.deltaTime);
+        currentAnimSpeed = Mathf.Lerp(currentAnimSpeed, speed, 6 * Time.deltaTime);
 
         animator.SetFloat("Speed", currentAnimSpeed);
+    }
+
+    public void Attack(InputAction.CallbackContext context)
+    {
+        if (isIncapacitated || !canAttack)
+            return;
+
+        if (context.performed)
+        {
+            canAttack = false;
+
+            if(isHoldingUp)
+            {
+                animator.SetTrigger("attackUp");
+                return;
+            }
+
+            if(!isGrounded)
+            {
+                animator.SetTrigger("attackFowardAir");
+                return;
+            }
+
+            animator.SetTrigger("attackFoward");
+        }
+    }
+
+    public void HoldingUp(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            isHoldingUp = true;
+        }
+
+        if(context.canceled)
+        {
+            isHoldingUp = false;
+        }
+    }
+
+    public void HoldingDown(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            isHoldingDown = true;
+            animator.SetBool("crouching", true);
+            Debug.Log(isHoldingDown);
+        }
+
+        if (context.canceled)
+        {
+            isHoldingDown = false;
+            animator.SetBool("crouching", false);
+            Debug.Log(isHoldingDown);
+        }
     }
 
     private void AirMomentum()
@@ -185,7 +255,7 @@ public class CharacterBase : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (isIncapacitated)
+        if (isIncapacitated || !canAttack)
             return;
 
         if (context.performed)
@@ -213,6 +283,17 @@ public class CharacterBase : MonoBehaviour
     public CharacterBase OtherPlayer()
     {
         return otherGuy;
+    }
+
+    private void AnimStop()
+    {
+        isIncapacitated = true;
+    }
+
+    private void AnimGo()
+    {
+        isIncapacitated = false;
+        canAttack = true;
     }
 
     public void ApplyDamage(float damage)
