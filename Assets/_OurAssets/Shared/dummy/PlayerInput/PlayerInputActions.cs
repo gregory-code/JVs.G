@@ -55,6 +55,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Special"",
+                    ""type"": ""Button"",
+                    ""id"": ""e4899c99-c7dc-4de0-9e88-7165f5ed90a5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""HoldingUp"",
                     ""type"": ""Button"",
                     ""id"": ""dd5107a7-288b-4c25-a80d-0d2302921433"",
@@ -183,6 +192,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""HoldingDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""34d4e022-1d09-49d3-b91b-3b33d2e40e9e"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Special"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -194,6 +214,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
+        m_Player_Special = m_Player.FindAction("Special", throwIfNotFound: true);
         m_Player_HoldingUp = m_Player.FindAction("HoldingUp", throwIfNotFound: true);
         m_Player_HoldingDown = m_Player.FindAction("HoldingDown", throwIfNotFound: true);
     }
@@ -260,6 +281,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Attack;
+    private readonly InputAction m_Player_Special;
     private readonly InputAction m_Player_HoldingUp;
     private readonly InputAction m_Player_HoldingDown;
     public struct PlayerActions
@@ -269,6 +291,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
+        public InputAction @Special => m_Wrapper.m_Player_Special;
         public InputAction @HoldingUp => m_Wrapper.m_Player_HoldingUp;
         public InputAction @HoldingDown => m_Wrapper.m_Player_HoldingDown;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -289,6 +312,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
+            @Special.started += instance.OnSpecial;
+            @Special.performed += instance.OnSpecial;
+            @Special.canceled += instance.OnSpecial;
             @HoldingUp.started += instance.OnHoldingUp;
             @HoldingUp.performed += instance.OnHoldingUp;
             @HoldingUp.canceled += instance.OnHoldingUp;
@@ -308,6 +334,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
+            @Special.started -= instance.OnSpecial;
+            @Special.performed -= instance.OnSpecial;
+            @Special.canceled -= instance.OnSpecial;
             @HoldingUp.started -= instance.OnHoldingUp;
             @HoldingUp.performed -= instance.OnHoldingUp;
             @HoldingUp.canceled -= instance.OnHoldingUp;
@@ -336,6 +365,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnSpecial(InputAction.CallbackContext context);
         void OnHoldingUp(InputAction.CallbackContext context);
         void OnHoldingDown(InputAction.CallbackContext context);
     }

@@ -30,6 +30,34 @@ public class FightCamera : MonoBehaviour
         pos.y = (dis <= 5f) ? (pos.y * 0.7f) + y : y ;
         pos.z = (dis * zMultiplier) + z;
 
-        transform.position = Vector3.Lerp(transform.position, pos, 7 * Time.deltaTime);
+        if (shaking)
+        {
+            Vector3 shakeAmount = new Vector3(Random.value, Random.value, Random.value) * shakeMangintude * (Random.value > 0.5f ? 1 : -1);
+            transform.localPosition += shakeAmount;
+        }
+        else
+        {
+            transform.position = Vector3.Lerp(transform.position, pos, 7 * Time.deltaTime);
+        }
+    }
+
+    [SerializeField] float shakeDuration = 0.2f;
+    [SerializeField] float shakeMangintude = 0.1f;
+
+    bool shaking;
+
+    public void StartShake()
+    {
+        if (!shaking)
+        {
+            StartCoroutine(ShakeCoroutine());
+        }
+    }
+
+    IEnumerator ShakeCoroutine()
+    {
+        shaking = true;
+        yield return new WaitForSeconds(shakeDuration);
+        shaking = false;
     }
 }

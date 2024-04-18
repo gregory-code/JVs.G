@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 public class CharacterBase : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class CharacterBase : MonoBehaviour
 
     [SerializeField] private float testX;
     [SerializeField] private float testY;
+
+    public int bonusDamage = 0;
 
     [SerializeField] float hitGravity;
     private float gravity = -20;
@@ -52,6 +55,8 @@ public class CharacterBase : MonoBehaviour
     private float currentHealth = 100;
     private Image healthBar;
 
+    [SerializeField] float groundCheck;
+
     private float maxMeter = 100;
     private float currentMeter = 0;
     private Image meterBar;
@@ -59,6 +64,14 @@ public class CharacterBase : MonoBehaviour
 
     [SerializeField] Transform[] hitBoxes;
     [SerializeField] float testRange;
+
+    [SerializeField] GameObject hitEffect;
+    [SerializeField] GameObject damageEffect;
+    [SerializeField] GameObject groundHit;
+    [SerializeField] GameObject groundCharge;
+    [SerializeField] GameObject fireball;
+    [SerializeField] GameObject yellBlood;
+    [SerializeField] GameObject yellHands;
 
     void Start()
     {
@@ -81,9 +94,13 @@ public class CharacterBase : MonoBehaviour
 
     void Update()
     {
+        Gravity();
+
+        if (isDead)
+            return;
+
         GroundCheck();
         HandleKnockback();
-        Gravity();
         ManageBars();
 
         if (isIncapacitated)
@@ -101,10 +118,21 @@ public class CharacterBase : MonoBehaviour
         }
     }
 
+    public void Tie()
+    {
+        isDead = true;
+        animator.SetTrigger("Tie");
+    }
+
     private void ManageBars()
     {
         healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, currentHealth / maxHealth, 10 * Time.deltaTime);
         meterBar.fillAmount = Mathf.Lerp(meterBar.fillAmount, currentMeter / maxMeter, 10 * Time.deltaTime);
+    }
+
+    public float GetRemainingHealth()
+    {
+        return currentHealth;
     }
 
     private void GroundCheck()
@@ -211,14 +239,20 @@ public class CharacterBase : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
-        if (isIncapacitated || !canAttack)
+        if (isIncapacitated || !canAttack || isDead)
             return;
 
         if (context.performed)
         {
             canAttack = false;
 
-            if(isHoldingUp)
+            if (!isGrounded)
+            {
+                animator.SetTrigger("attackFowardAir");
+                return;
+            }
+
+            if (isHoldingUp)
             {
                 animator.SetTrigger("attackUp");
                 return;
@@ -230,15 +264,60 @@ public class CharacterBase : MonoBehaviour
                 return;
             }
 
-            if(!isGrounded)
+            animator.SetTrigger("attackFoward");
+        }
+    }
+
+    public void Special(InputAction.CallbackContext context)
+    {
+        if (isIncapacitated || !canAttack || isDead)
+            return;
+
+        if (context.performed)
+        {
+            canAttack = false;
+
+            if (!isGrounded)
             {
-                //animator.SetTrigger("attackFowardAir");
                 animator.SetTrigger("specialFowardAir");
                 return;
             }
 
-            animator.SetTrigger("attackFoward");
+            if (isHoldingUp)
+            {
+                animator.SetTrigger("specialUp");
+                GameObject charge = Instantiate(groundCharge, hitBoxes[0]);
+                charge.transform.localPosition = Vector3.zero;
+                Destroy(charge, 1.2f);
+
+                return;
+            }
+
+            if (isHoldingDown)
+            {
+                animator.SetTrigger("specialDown");
+                bonusDamage += 4;
+                GameObject hand1 = Instantiate(yellHands, hitBoxes[0].position, hitBoxes[0].rotation);
+                hand1.GetComponent<Hand>().Init(hitBoxes[0], this);
+                GameObject hand2 = Instantiate(yellHands, hitBoxes[3].position, hitBoxes[3].rotation);
+                hand2.GetComponent<Hand>().Init(hitBoxes[3], this);
+                return;
+            }
+
+            animator.SetTrigger("specialFoward");
+            Vector3 rot = new Vector3(-90, -90, 0);
+            GameObject fireballPrefab = Instantiate(fireball, hitBoxes[2].position, Quaternion.Euler(rot));
+            fireballPrefab.GetComponent<Fireball>().Init(hitBoxes[2], transform.right, facingRight, otherGuy, bonusDamage);
         }
+    }
+    public void RageOver()
+    {
+        bonusDamage -= 2;
+    }
+
+    public void spit()
+    {
+        GameObject spit = Instantiate(yellBlood, hitBoxes[4].position, hitBoxes[4].rotation);
     }
 
     public void HoldingUp(InputAction.CallbackContext context)
@@ -278,7 +357,7 @@ public class CharacterBase : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (isIncapacitated || !canAttack)
+        if (isIncapacitated || !canAttack || isDead)
             return;
 
         if (context.performed)
@@ -315,7 +394,6 @@ public class CharacterBase : MonoBehaviour
 
     private void AnimGo()
     {
-        characterController.detectCollisions = true;
         Physics.IgnoreCollision(characterController, otherGuy.GetComponent<Collider>(), false);
         isIncapacitated = false;
         canAttack = true;
@@ -329,24 +407,40 @@ public class CharacterBase : MonoBehaviour
         {
             if (hit.GetComponent<CharacterBase>() == otherGuy)
             {
-                otherGuy.ApplyDamage(attack.damage);
-                otherGuy.ApplyHitStun(attack.headShot);
-                otherGuy.ApplyKnockback(attack.knockbackX, attack.knockbackY);
+                if(otherGuy.ApplyDamage(attack.damage + bonusDamage))
+                {
+                    Vector3 rot = Vector3.zero;
+                    rot.y = 90;
+                    if (otherGuy.facingRight)
+                        rot.y = -90;
+
+                    Instantiate(hitEffect, hitBoxes[attack.hitBoxID].position, Quaternion.Euler(rot));
+                    otherGuy.ApplyHitStun(attack.headShot);
+                    otherGuy.ApplyKnockback(attack.knockbackX, attack.knockbackY);
+                }
             }
         }
     }
 
-    public void ApplyDamage(float damage)
+    public bool ApplyDamage(float damage)
     {
         if (damage <= 0 || isDead == true)
-            return;
+            return false;
 
-        if(currentAnimSpeed <= -0.6f)
+        Camera.main.GetComponent<FightCamera>().StartShake();
+        Camera.main.GetComponent<ScreenVFX>().StartFreezeFrame();
+
+        Vector3 pos = Vector3.zero;
+        pos.y += 1;
+        GameObject localDamageEffect = Instantiate(damageEffect, transform);
+        damageEffect.transform.position = pos;
+
+        if (currentAnimSpeed <= -0.6f)
         {
             animator.SetTrigger("guard");
             StartCoroutine(IncapacitatedDuration(0.5f));
             AddMeter(damage / 2);
-            return;
+            return false;
         }
 
         AddMeter(damage);
@@ -357,6 +451,8 @@ public class CharacterBase : MonoBehaviour
             isDead = true;
             animator.SetTrigger("death");
         }
+
+        return true;
     }
 
     public void ApplyHitStun(bool headShot) // headShot determines their flinch, headshots stun for longer
@@ -392,7 +488,6 @@ public class CharacterBase : MonoBehaviour
         if (knockback_Y > 0)
             gravity = hitGravity;
 
-        characterController.detectCollisions = false;
         Physics.IgnoreCollision(characterController, otherGuy.GetComponent<Collider>());
     }
 
@@ -423,6 +518,15 @@ public class CharacterBase : MonoBehaviour
         {
             animator.SetTrigger("missSpecialAir");
         }
+    }
+
+    private void GroundHit()
+    {
+        Vector3 pos = Vector3.zero;
+        pos.x += 1;
+
+        GameObject groundSpark = Instantiate(groundHit, transform);
+        groundSpark.transform.localPosition = pos;
     }
 
     IEnumerator IncapacitatedDuration(float duration)

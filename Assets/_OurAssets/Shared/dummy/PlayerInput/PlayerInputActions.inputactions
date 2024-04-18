@@ -33,6 +33,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Special",
+                    "type": "Button",
+                    "id": "e4899c99-c7dc-4de0-9e88-7165f5ed90a5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "HoldingUp",
                     "type": "Button",
                     "id": "dd5107a7-288b-4c25-a80d-0d2302921433",
@@ -159,6 +168,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "HoldingDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "34d4e022-1d09-49d3-b91b-3b33d2e40e9e",
+                    "path": "<Keyboard>/o",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Special",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
