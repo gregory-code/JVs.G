@@ -892,7 +892,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
-  m_Radius: 0.25
+  m_Radius: 0.1
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -933,6 +933,11 @@ MonoBehaviour:
   backSpeed: 2
   testX: 0
   testY: 0
+  hitGravity: -6
+  hitBoxes:
+  - {fileID: 5778875304476187426}
+  - {fileID: 4753036869722030742}
+  testRange: 0.6
 --- !u!114 &205079738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3056,7 +3061,7 @@ Transform:
   m_GameObject: {fileID: 961739749}
   serializedVersion: 2
   m_LocalRotation: {x: 0.06104851, y: 0, z: 0, w: 0.99813485}
-  m_LocalPosition: {x: -1.8790034, y: 1.75, z: 0.120996594}
+  m_LocalPosition: {x: -1.8790034, y: 1.75, z: 0.24103999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3075,7 +3080,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   y: 1.75
-  z: 2
+  z: 2.5
+  zMultiplier: -0.5
 --- !u!1 &983638615
 GameObject:
   m_ObjectHideFlags: 0
@@ -3918,6 +3924,9 @@ MonoBehaviour:
   backSpeed: 0
   testX: 0
   testY: 0
+  hitGravity: -10
+  hitBoxes: []
+  testRange: 0
 --- !u!114 &1486559864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3964,6 +3973,18 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b697cc66-f308-4233-b7ed-243f36eb2568
     m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cd862a00-b0c0-49b2-9ba3-64bc37d3a429
+    m_ActionName: Player/Attack[/Keyboard/p]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dd5107a7-288b-4c25-a80d-0d2302921433
+    m_ActionName: Player/HoldingUp[/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3e212549-d2e7-4b3d-882d-ecaf5b35ec13
+    m_ActionName: Player/HoldingDown[/Keyboard/s]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -3989,7 +4010,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
-  m_Radius: 0.25
+  m_Radius: 0.1
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08

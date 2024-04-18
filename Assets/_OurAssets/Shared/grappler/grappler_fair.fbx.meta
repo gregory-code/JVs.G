@@ -51,7 +51,7 @@ ModelImporter:
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 1
+      keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
@@ -68,6 +68,14 @@ ModelImporter:
         functionName: AnimStop
         data: 
         objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.2692641
+        functionName: SendAttack
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: 147a9fd4d2493834497b60526b0e32d0,
+          type: 2}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

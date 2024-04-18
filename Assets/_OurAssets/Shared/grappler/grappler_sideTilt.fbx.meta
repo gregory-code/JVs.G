@@ -71,6 +71,14 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.5144877
+        functionName: SendAttack
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: b75462b21eb3c294c990708aeff8b372,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

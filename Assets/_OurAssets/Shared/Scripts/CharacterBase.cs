@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
 public class CharacterBase : MonoBehaviour
@@ -22,6 +23,9 @@ public class CharacterBase : MonoBehaviour
     [SerializeField] private float testX;
     [SerializeField] private float testY;
 
+    [SerializeField] float hitGravity;
+    private float gravity = -20;
+
     private bool isHoldingUp;
     private bool isHoldingDown;
 
@@ -36,6 +40,9 @@ public class CharacterBase : MonoBehaviour
     private bool isDead;
     private bool facingRight;
 
+    public delegate void OnAttackFoward();
+    public event OnAttackFoward onAttackFoward;
+
     private float currentAnimSpeed;
 
     private bool canAttack = true;
@@ -49,6 +56,9 @@ public class CharacterBase : MonoBehaviour
     private float currentMeter = 0;
     private Image meterBar;
     private TextMeshProUGUI meterBarText;
+
+    [SerializeField] Transform[] hitBoxes;
+    [SerializeField] float testRange;
 
     void Start()
     {
@@ -101,7 +111,7 @@ public class CharacterBase : MonoBehaviour
     {
         RaycastHit check;
 
-        float distance = 0.2f;
+        float distance = 0.3f;
 
         Vector3 dir = new Vector3(0, -1);
 
@@ -111,20 +121,26 @@ public class CharacterBase : MonoBehaviour
 
     private void HandleKnockback()
     {
-        if(knockback_X <= 0.6f && knockback_Y <= 0.6f)
+        if(knockback_X <= 0.6f && knockback_X >= -0.6f && knockback_Y <= 0.6f)
         {
             knockback_X = 0;
             knockback_Y = 0;
+            gravity = -20;
             return;
         }
 
         Vector3 knockbackForward = Vector3.zero;
         knockbackForward.x = 1;
-        if (knockback_X <= 0.6f)
+        if (knockback_X <= 0.6f && knockback_X >= -0.6f)
             knockbackForward.x = 0;
 
         characterController.Move(knockbackForward * knockback_X * Time.deltaTime);
-        knockback_X -= Time.deltaTime * 3;
+
+        if(knockback_X < 0)
+            knockback_X += Time.deltaTime * 3;
+
+        if(knockback_X > 0)
+            knockback_X -= Time.deltaTime * 3;
 
         Vector3 knockbackUp = Vector3.zero;
         knockbackUp.y = 1;
@@ -138,7 +154,7 @@ public class CharacterBase : MonoBehaviour
 
     private void Gravity()
     {
-        playerVelocity.y += -20 * Time.deltaTime;
+        playerVelocity.y += gravity * Time.deltaTime;
 
         if (isGrounded && playerVelocity.y < 0)
         {
@@ -208,9 +224,16 @@ public class CharacterBase : MonoBehaviour
                 return;
             }
 
+            if(isHoldingDown)
+            {
+                animator.SetTrigger("attackDown");
+                return;
+            }
+
             if(!isGrounded)
             {
-                animator.SetTrigger("attackFowardAir");
+                //animator.SetTrigger("attackFowardAir");
+                animator.SetTrigger("specialFowardAir");
                 return;
             }
 
@@ -292,8 +315,25 @@ public class CharacterBase : MonoBehaviour
 
     private void AnimGo()
     {
+        characterController.detectCollisions = true;
+        Physics.IgnoreCollision(characterController, otherGuy.GetComponent<Collider>(), false);
         isIncapacitated = false;
         canAttack = true;
+    }
+
+    public void SendAttack(AnimAttack attack)
+    {
+        Collider[] colliders = Physics.OverlapSphere(hitBoxes[attack.hitBoxID].position, attack.range); 
+
+        foreach(Collider hit in colliders)
+        {
+            if (hit.GetComponent<CharacterBase>() == otherGuy)
+            {
+                otherGuy.ApplyDamage(attack.damage);
+                otherGuy.ApplyHitStun(attack.headShot);
+                otherGuy.ApplyKnockback(attack.knockbackX, attack.knockbackY);
+            }
+        }
     }
 
     public void ApplyDamage(float damage)
@@ -338,8 +378,22 @@ public class CharacterBase : MonoBehaviour
 
     public void ApplyKnockback(float horizontalKnockback, float verticalKnockback)
     {
-        knockback_X = horizontalKnockback;
+        if (facingRight)
+        {
+            knockback_X += horizontalKnockback;
+        }
+        else
+        {
+            knockback_X -= horizontalKnockback;
+        }
+
         knockback_Y = verticalKnockback;
+        
+        if (knockback_Y > 0)
+            gravity = hitGravity;
+
+        characterController.detectCollisions = false;
+        Physics.IgnoreCollision(characterController, otherGuy.GetComponent<Collider>());
     }
 
     public void ApplyGrab()
@@ -347,6 +401,28 @@ public class CharacterBase : MonoBehaviour
         StopAllCoroutines();
         animator.SetTrigger("grab");
         StartCoroutine(IncapacitatedDuration(2));
+    }
+
+    public void TryGrab()
+    {
+        Collider[] colliders = Physics.OverlapSphere(hitBoxes[1].position, 1);
+
+        bool gotem = false;
+
+        foreach (Collider hit in colliders)
+        {
+            if (hit.GetComponent<CharacterBase>() == otherGuy)
+            {
+                gotem = true;
+                Debug.Log("Got em");
+                otherGuy.ApplyGrab();
+            }
+        }
+
+        if(gotem == false)
+        {
+            animator.SetTrigger("missSpecialAir");
+        }
     }
 
     IEnumerator IncapacitatedDuration(float duration)
@@ -382,5 +458,14 @@ public class CharacterBase : MonoBehaviour
         currentMeter += meterAdded;
         currentMeter = Mathf.Clamp(currentMeter, 0, maxMeter);
         meterBarText.text = "Meter: " + currentMeter + "%";
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (isDummy)
+            return;
+
+        Gizmos.color = Color.gray;
+        Gizmos.DrawWireSphere(hitBoxes[0].position, testRange);
     }
 }
