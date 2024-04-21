@@ -78,7 +78,14 @@ public class CharacterBase : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         playerInput = new PlayerInputActions();
-        playerInput.Player.Enable();
+        if(isPlayer1)
+        {
+            playerInput.Player.Enable();
+        }
+        else
+        {
+            playerInput.Player1.Enable();
+        }
 
         string ID = (isPlayer1) ? "P1" : "P2" ;
         healthBar = GameObject.Find(ID + "health").GetComponent<Image>();

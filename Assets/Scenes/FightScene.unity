@@ -1137,6 +1137,30 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: e4899c99-c7dc-4de0-9e88-7165f5ed90a5
     m_ActionName: Player/Special[/Keyboard/o]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f24c79f8-69bf-4a87-8711-875049661774
+    m_ActionName: Player1/Movement[/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d16906b1-915b-4aa3-9532-008c9806044b
+    m_ActionName: Player1/Jump[/Keyboard/numpad3]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: af26710b-f9a5-4fc6-b7a5-18f693a2dd5b
+    m_ActionName: Player1/Attack[/Keyboard/numpad1]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 61afdddf-4a6d-4211-add0-55199f7bca1d
+    m_ActionName: Player1/Special[/Keyboard/numpad2]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 03bc37b0-a754-46ab-b9a9-ca1fcc925982
+    m_ActionName: Player1/HoldingUp[/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cbbc911f-23cf-4b2c-bb5f-38e6bd01a6ae
+    m_ActionName: Player1/HoldingDown[/Keyboard/downArrow]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -2613,6 +2637,37 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.00003683567, y: -0.20987973, z: 0.009099342}
     m_Extent: {x: 0.94527364, y: 0.8103517, z: 0.14502466}
   m_DirtyAABB: 0
+--- !u!1 &696597024
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 696597025}
+  m_Layer: 0
+  m_Name: weapon (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &696597025
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696597024}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.5721206, y: -0.39188802, z: 0.4395554, w: 0.57087034}
+  m_LocalPosition: {x: 0.015447222, y: 0.11410037, z: 0.051134557}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1718615434}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &697929163
 GameObject:
   m_ObjectHideFlags: 0
@@ -4448,25 +4503,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer1: 0
-  isDummy: 1
-  jumpHeight: 0
-  runSpeed: 0
-  backSpeed: 0
+  isDummy: 0
+  jumpHeight: 1.2
+  runSpeed: 6.5
+  backSpeed: 2
   testX: 0
   testY: 0
   bonusDamage: 0
-  hitGravity: -10
+  hitGravity: -6
   groundCheck: 0
-  hitBoxes: []
-  testRange: 0
-  hitEffect: {fileID: 0}
+  hitBoxes:
+  - {fileID: 1718615434}
+  - {fileID: 1345887014}
+  - {fileID: 696597025}
+  - {fileID: 823655425}
+  - {fileID: 1274931025}
+  testRange: 0.6
+  hitEffect: {fileID: 150944, guid: 5d00f77775aab7d41bc6867003e6d3ad, type: 3}
   damageEffect: {fileID: 1124898784416722, guid: 8a5f1c81a5b7f59429ff958d19f3058b,
     type: 3}
-  groundHit: {fileID: 0}
-  groundCharge: {fileID: 0}
-  fireball: {fileID: 0}
-  yellBlood: {fileID: 0}
-  yellHands: {fileID: 0}
+  groundHit: {fileID: 183926, guid: cd0adb86e6ac25d46ba0bd5681e5572a, type: 3}
+  groundCharge: {fileID: 162722, guid: ae0ba199ccdac3c4dbd7568baad79cce, type: 3}
+  fireball: {fileID: 147436, guid: 11a0636cda4873c4f9be25aa6b911b4b, type: 3}
+  yellBlood: {fileID: 119212, guid: d1d8107526ba8b54ca4e9429961f0d79, type: 3}
+  yellHands: {fileID: 137516, guid: 6e989684df8737343a731f7b2d30073f, type: 3}
 --- !u!114 &1486559864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4499,7 +4559,7 @@ MonoBehaviour:
     m_ActionName: Player/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 205079737}
         m_TargetAssemblyTypeName: CharacterBase, Assembly-CSharp
         m_MethodName: Jump
         m_Mode: 0
@@ -4514,24 +4574,156 @@ MonoBehaviour:
     m_ActionId: b697cc66-f308-4233-b7ed-243f36eb2568
     m_ActionName: Player/Jump[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 205079737}
+        m_TargetAssemblyTypeName: CharacterBase, Assembly-CSharp
+        m_MethodName: Attack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: cd862a00-b0c0-49b2-9ba3-64bc37d3a429
     m_ActionName: Player/Attack[/Keyboard/p]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 205079737}
+        m_TargetAssemblyTypeName: CharacterBase, Assembly-CSharp
+        m_MethodName: HoldingUp
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: dd5107a7-288b-4c25-a80d-0d2302921433
     m_ActionName: Player/HoldingUp[/Keyboard/w]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 205079737}
+        m_TargetAssemblyTypeName: CharacterBase, Assembly-CSharp
+        m_MethodName: HoldingDown
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 3e212549-d2e7-4b3d-882d-ecaf5b35ec13
-    m_ActionName: Player/HoldingDown[/Keyboard/s]
+    m_ActionName: Player/HoldingDown[/Keyboard/d]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 205079737}
+        m_TargetAssemblyTypeName: CharacterBase, Assembly-CSharp
+        m_MethodName: Special
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: e4899c99-c7dc-4de0-9e88-7165f5ed90a5
     m_ActionName: Player/Special[/Keyboard/o]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f24c79f8-69bf-4a87-8711-875049661774
+    m_ActionName: Player1/Movement[/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1486559863}
+        m_TargetAssemblyTypeName: CharacterBase, Assembly-CSharp
+        m_MethodName: Jump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d16906b1-915b-4aa3-9532-008c9806044b
+    m_ActionName: Player1/Jump[/Keyboard/numpad3]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1486559863}
+        m_TargetAssemblyTypeName: CharacterBase, Assembly-CSharp
+        m_MethodName: Attack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: af26710b-f9a5-4fc6-b7a5-18f693a2dd5b
+    m_ActionName: Player1/Attack[/Keyboard/numpad1]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1486559863}
+        m_TargetAssemblyTypeName: CharacterBase, Assembly-CSharp
+        m_MethodName: Special
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 61afdddf-4a6d-4211-add0-55199f7bca1d
+    m_ActionName: Player1/Special[/Keyboard/numpad2]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1486559863}
+        m_TargetAssemblyTypeName: CharacterBase, Assembly-CSharp
+        m_MethodName: HoldingUp
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 03bc37b0-a754-46ab-b9a9-ca1fcc925982
+    m_ActionName: Player1/HoldingUp[/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1486559863}
+        m_TargetAssemblyTypeName: CharacterBase, Assembly-CSharp
+        m_MethodName: HoldingDown
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: cbbc911f-23cf-4b2c-bb5f-38e6bd01a6ae
+    m_ActionName: Player1/HoldingDown[/Keyboard/downArrow]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: Player1
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!143 &1486559865
@@ -5534,6 +5726,7 @@ Transform:
   - {fileID: 1904218394}
   - {fileID: 798109102}
   - {fileID: 155727571}
+  - {fileID: 696597025}
   m_Father: {fileID: 588367118}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1734506916
