@@ -16,6 +16,7 @@ public class CharacterBase : MonoBehaviour
     private Animator animator;
 
     [SerializeField] private bool isPlayer1;
+    [SerializeField] private bool isGrappler;
     [SerializeField] private bool isDummy;
     [SerializeField] private float jumpHeight;
     [SerializeField] private float runSpeed;
@@ -72,11 +73,17 @@ public class CharacterBase : MonoBehaviour
     [SerializeField] GameObject fireball;
     [SerializeField] GameObject yellBlood;
     [SerializeField] GameObject yellHands;
+    [SerializeField] GameObject slash;
+    [SerializeField] Transform slashPos;
+    [SerializeField] GameObject slashGround;
+    [SerializeField] GameObject stormHands;
+    [SerializeField] GameObject swordSpin;
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        animator.SetBool("isGrappler", isGrappler);
         playerInput = new PlayerInputActions();
         if(isPlayer1)
         {
@@ -108,12 +115,13 @@ public class CharacterBase : MonoBehaviour
 
         GroundCheck();
         HandleKnockback();
+        HandleZoomies();
+        HandleSlide();
         ManageBars();
+        FaceEnemy();
 
         if (isIncapacitated)
             return;
-
-        FaceEnemy();
 
         if (isGrounded)
         {
@@ -223,6 +231,12 @@ public class CharacterBase : MonoBehaviour
             return;
 
         Vector2 inputVector = playerInput.Player.Movement.ReadValue<Vector2>();
+
+        if (!isPlayer1)
+        {
+            inputVector = playerInput.Player1.Movement.ReadValue<Vector2>();
+        }
+
         moveDirection = new Vector3(inputVector.x, 0, inputVector.y);
 
         float moveSpeed = runSpeed;
@@ -293,9 +307,12 @@ public class CharacterBase : MonoBehaviour
             if (isHoldingUp)
             {
                 animator.SetTrigger("specialUp");
-                GameObject charge = Instantiate(groundCharge, hitBoxes[0]);
-                charge.transform.localPosition = Vector3.zero;
-                Destroy(charge, 1.2f);
+                if(isGrappler)
+                {
+                    GameObject charge = Instantiate(groundCharge, hitBoxes[0]);
+                    charge.transform.localPosition = Vector3.zero;
+                    Destroy(charge, 1.2f);
+                }
 
                 return;
             }
@@ -303,18 +320,32 @@ public class CharacterBase : MonoBehaviour
             if (isHoldingDown)
             {
                 animator.SetTrigger("specialDown");
-                bonusDamage += 4;
-                GameObject hand1 = Instantiate(yellHands, hitBoxes[0].position, hitBoxes[0].rotation);
-                hand1.GetComponent<Hand>().Init(hitBoxes[0], this);
-                GameObject hand2 = Instantiate(yellHands, hitBoxes[3].position, hitBoxes[3].rotation);
-                hand2.GetComponent<Hand>().Init(hitBoxes[3], this);
+                if(isGrappler)
+                {
+                    bonusDamage += 4;
+                    GameObject hand1 = Instantiate(yellHands, hitBoxes[0].position, hitBoxes[0].rotation);
+                    hand1.GetComponent<Hand>().Init(hitBoxes[0], this);
+                    GameObject hand2 = Instantiate(yellHands, hitBoxes[3].position, hitBoxes[3].rotation);
+                    hand2.GetComponent<Hand>().Init(hitBoxes[3], this);
+                }
                 return;
             }
 
             animator.SetTrigger("specialFoward");
-            Vector3 rot = new Vector3(-90, -90, 0);
-            GameObject fireballPrefab = Instantiate(fireball, hitBoxes[2].position, Quaternion.Euler(rot));
-            fireballPrefab.GetComponent<Fireball>().Init(hitBoxes[2], transform.right, facingRight, otherGuy, bonusDamage);
+            if(isGrappler)
+            {
+                Vector3 rot = new Vector3(-90, -90, 0);
+                GameObject fireballPrefab = Instantiate(fireball, hitBoxes[2].position, Quaternion.Euler(rot));
+                fireballPrefab.GetComponent<Fireball>().Init(hitBoxes[2], transform.right, facingRight, otherGuy, bonusDamage);
+            }
+            else
+            {
+                characterController.enabled = false;
+                GameObject thunderHand = Instantiate(stormHands, hitBoxes[0].position, hitBoxes[0].rotation);
+                thunderHand.GetComponent<KnightDash>().Init(hitBoxes[0], this);
+                GameObject thunderHand2 = Instantiate(stormHands, hitBoxes[3].position, hitBoxes[3].rotation);
+                thunderHand2.GetComponent<KnightDash>().Init(hitBoxes[3], this);
+            }
         }
     }
     public void RageOver()
@@ -322,9 +353,89 @@ public class CharacterBase : MonoBehaviour
         bonusDamage -= 2;
     }
 
+    public void Zoom()
+    {
+        zoomies = true;
+
+        Vector2 inputVector = playerInput.Player1.Movement.ReadValue<Vector2>();
+        Vector3 teleport = otherGuy.transform.position;
+
+        if (inputVector.x > 0)
+        {
+            teleport.x += 5f;
+        }
+
+        if (inputVector.x < 0)
+        {
+            teleport.x -= 5f;
+        }
+
+        if(inputVector.x == 0)
+        {
+            teleport.x = transform.position.x;
+        }
+
+        transform.position = teleport;
+
+        StartCoroutine(EnableTheControllerDammit());
+    }
+    bool zoomies;
+    bool sliding;
+    public void Slide()
+    {
+        sliding = true;
+    }
+
+    IEnumerator EnableTheControllerDammit()
+    {
+        yield return new WaitForEndOfFrame();
+        characterController.enabled = true;
+    }
+
+    private void HandleZoomies()
+    {
+        if (zoomies == false)
+            return;
+
+        Vector3 fast = Vector3.zero;
+        fast.x = 1;
+
+        if (facingRight == false)
+            fast *= -1;
+
+        characterController.Move(fast * 30 * Time.deltaTime);
+    }
+
+    private void HandleSlide()
+    {
+        if (sliding == false)
+            return;
+
+        Vector3 fast = Vector3.zero;
+        fast.x = 1;
+
+        if (facingRight == false)
+            fast *= -1;
+
+        characterController.Move(fast * 18 * Time.deltaTime);
+    }
+
     public void spit()
     {
         GameObject spit = Instantiate(yellBlood, hitBoxes[4].position, hitBoxes[4].rotation);
+        if(facingRight == false)
+        {
+            Vector3 rot = new Vector3(0, -90, 90);
+            spit.transform.rotation = Quaternion.Euler(rot);
+        }
+    }
+
+    public void Spin()
+    {
+        GameObject spin = Instantiate(swordSpin, transform.position, transform.rotation);
+        Vector3 rot = new Vector3(-90, 0, 0);
+        spin.transform.rotation = Quaternion.Euler(rot);
+        Destroy(spin, 1);
     }
 
     public void HoldingUp(InputAction.CallbackContext context)
@@ -384,16 +495,6 @@ public class CharacterBase : MonoBehaviour
         playerVelocity.y = Mathf.Sqrt(jumpHeight * -3 * -20);
     }
 
-    public bool CanAttack()
-    {
-        return canAttack;
-    }
-
-    public CharacterBase OtherPlayer()
-    {
-        return otherGuy;
-    }
-
     private void AnimStop()
     {
         isIncapacitated = true;
@@ -402,6 +503,8 @@ public class CharacterBase : MonoBehaviour
     private void AnimGo()
     {
         Physics.IgnoreCollision(characterController, otherGuy.GetComponent<Collider>(), false);
+        sliding = false;
+        zoomies = false;
         isIncapacitated = false;
         canAttack = true;
     }
@@ -462,6 +565,25 @@ public class CharacterBase : MonoBehaviour
         return true;
     }
 
+    public void Slash()
+    {
+        zoomies = false;
+        GameObject newSlash = Instantiate(slash, slashPos);
+        newSlash.transform.localPosition = Vector3.zero;
+        Destroy(newSlash, 1);
+    }
+
+    public void SlashGround()
+    {
+        Vector3 pos = Vector3.zero;
+        pos.x += 1.6f;
+
+        GameObject groundslash = Instantiate(slashGround, transform);
+        groundslash.transform.localPosition = pos;
+
+        Destroy(groundslash, 1);
+    }
+
     public void ApplyHitStun(bool headShot) // headShot determines their flinch, headshots stun for longer
     {
         StopAllCoroutines();
@@ -483,11 +605,11 @@ public class CharacterBase : MonoBehaviour
     {
         if (facingRight)
         {
-            knockback_X += horizontalKnockback;
+            knockback_X -= horizontalKnockback;
         }
         else
         {
-            knockback_X -= horizontalKnockback;
+            knockback_X += horizontalKnockback;
         }
 
         knockback_Y = verticalKnockback;
@@ -502,6 +624,13 @@ public class CharacterBase : MonoBehaviour
     {
         StopAllCoroutines();
         animator.SetTrigger("grab");
+        StartCoroutine(IncapacitatedDuration(2));
+    }
+
+    public void GettingSlain()
+    {
+        StopAllCoroutines();
+        animator.SetTrigger("executed");
         StartCoroutine(IncapacitatedDuration(2));
     }
 
@@ -524,6 +653,28 @@ public class CharacterBase : MonoBehaviour
         if(gotem == false)
         {
             animator.SetTrigger("missSpecialAir");
+        }
+    }
+
+    public void CheckSlash()
+    {
+        Collider[] colliders = Physics.OverlapSphere(hitBoxes[0].position, 0.7f);
+
+        bool gotem = false;
+
+        foreach (Collider hit in colliders)
+        {
+            if (hit.GetComponent<CharacterBase>() == otherGuy)
+            {
+                gotem = true;
+                Debug.Log("Got em");
+                otherGuy.GettingSlain();
+            }
+        }
+
+        if (gotem == false)
+        {
+            animator.SetTrigger("missed");
         }
     }
 

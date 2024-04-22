@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitBoxID: 0
   range: 1.5
-  damage: 15
+  damage: 20
   knockbackX: 4
   knockbackY: 8
   headShot: 1
