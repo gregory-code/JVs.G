@@ -5,9 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI.Table;
 
 public class CharacterBase : MonoBehaviour
 {
@@ -85,7 +83,9 @@ public class CharacterBase : MonoBehaviour
         animator = GetComponent<Animator>();
         animator.SetBool("isGrappler", isGrappler);
         playerInput = new PlayerInputActions();
-        if(isPlayer1)
+
+
+        if (isPlayer1)
         {
             playerInput.Player.Enable();
         }
@@ -94,7 +94,7 @@ public class CharacterBase : MonoBehaviour
             playerInput.Player1.Enable();
         }
 
-        string ID = (isPlayer1) ? "P1" : "P2" ;
+        string ID = (isPlayer1) ? "P1" : "P2";
         healthBar = GameObject.Find(ID + "health").GetComponent<Image>();
         meterBar = GameObject.Find(ID + "special").GetComponent<Image>();
         meterBarText = GameObject.Find(ID + "MeterText").GetComponent<TextMeshProUGUI>();
@@ -103,7 +103,14 @@ public class CharacterBase : MonoBehaviour
         meterBar.fillAmount = 0;
         meterBarText.text = "Meter: " + currentMeter + "%";
 
-        otherGuy = (isPlayer1) ? GameObject.FindGameObjectWithTag("P2").GetComponent<CharacterBase>() : GameObject.FindGameObjectWithTag("P1").GetComponent<CharacterBase>() ;
+        StartCoroutine(DelaySetup());
+    }
+
+    IEnumerator DelaySetup()
+    {
+        yield return new WaitForEndOfFrame();
+
+        otherGuy = (isPlayer1) ? GameObject.FindGameObjectWithTag("P2").GetComponent<CharacterBase>() : GameObject.FindGameObjectWithTag("P1").GetComponent<CharacterBase>();
     }
 
     void Update()
@@ -118,7 +125,10 @@ public class CharacterBase : MonoBehaviour
         HandleZoomies();
         HandleSlide();
         ManageBars();
-        FaceEnemy();
+
+
+        if(otherGuy != null)
+            FaceEnemy();
 
         if (isIncapacitated)
             return;
@@ -559,10 +569,19 @@ public class CharacterBase : MonoBehaviour
         if (currentHealth <= 0)
         {
             isDead = true;
+            bool winnerP1 = (isPlayer1) ? false : true ;
+            otherGuy.IWon();
+            FindObjectOfType<FightMaster>().Winner(winnerP1);
+
             animator.SetTrigger("death");
         }
 
         return true;
+    }
+
+    public void IWon()
+    {
+        isDead = true;
     }
 
     public void Slash()

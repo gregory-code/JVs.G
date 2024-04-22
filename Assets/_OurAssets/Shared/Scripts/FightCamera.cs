@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteAlways]
 public class FightCamera : MonoBehaviour
 {
     private CharacterBase P1;
@@ -13,14 +12,17 @@ public class FightCamera : MonoBehaviour
 
     [SerializeField] private float zMultiplier;
 
-    void Start()
+    public void SetUp(CharacterBase p1, CharacterBase p2)
     {
-        P1 = GameObject.FindGameObjectWithTag("P1").GetComponent<CharacterBase>();
-        P2 = GameObject.FindGameObjectWithTag("P2").GetComponent<CharacterBase>();
+        P1 = p1;
+        P2 = p2;
     }
 
     void Update()
     {
+        if (P1 == null || P2 == null)
+            return;
+
         Vector3 P1pos = P1.transform.position;
         Vector3 P2pos = P2.transform.position;
         Vector3 pos = (P1pos + P2pos) / 2;
