@@ -583,6 +583,7 @@ public class CharacterBase : MonoBehaviour
     public void IWon()
     {
         isDead = true;
+        animator.SetTrigger("Win");
     }
 
     public void Slash()
