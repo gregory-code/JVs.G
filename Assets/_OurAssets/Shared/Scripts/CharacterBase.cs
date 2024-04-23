@@ -365,6 +365,7 @@ public class CharacterBase : MonoBehaviour
 
     public void Zoom()
     {
+        //characterController.enabled = false;
         zoomies = true;
 
         Vector2 inputVector = playerInput.Player1.Movement.ReadValue<Vector2>();
@@ -675,6 +676,11 @@ public class CharacterBase : MonoBehaviour
         }
     }
 
+    public void GoThroughDefense()
+    {
+        currentAnimSpeed = 0;
+    }
+
     public void CheckSlash()
     {
         Collider[] colliders = Physics.OverlapSphere(hitBoxes[0].position, 0.7f);
@@ -686,6 +692,7 @@ public class CharacterBase : MonoBehaviour
             if (hit.GetComponent<CharacterBase>() == otherGuy)
             {
                 gotem = true;
+                otherGuy.GoThroughDefense();
                 Debug.Log("Got em");
                 otherGuy.GettingSlain();
             }

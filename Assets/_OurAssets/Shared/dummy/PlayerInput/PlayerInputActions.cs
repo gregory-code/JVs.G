@@ -163,7 +163,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""97e2eee3-1b3d-45ee-af6e-a46289923580"",
-                    ""path"": ""<Keyboard>/p"",
+                    ""path"": ""<Keyboard>/o"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
@@ -196,7 +196,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""34d4e022-1d09-49d3-b91b-3b33d2e40e9e"",
-                    ""path"": ""<Keyboard>/o"",
+                    ""path"": ""<Keyboard>/p"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
@@ -335,7 +335,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c5c94021-9034-4569-80f7-190d6ffdda42"",
-                    ""path"": ""<Keyboard>/slash"",
+                    ""path"": ""<Keyboard>/numpad0"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -346,7 +346,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""014cb464-fe85-478d-a764-bc7e88894cbc"",
-                    ""path"": ""<Keyboard>/rightAlt"",
+                    ""path"": ""<Keyboard>/numpad1"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
@@ -379,7 +379,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a5bf8df2-80a3-425d-b216-cdb4b2e8a7fd"",
-                    ""path"": ""<Keyboard>/rightCtrl"",
+                    ""path"": ""<Keyboard>/numpad2"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",

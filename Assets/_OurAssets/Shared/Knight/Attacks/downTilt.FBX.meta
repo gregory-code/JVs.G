@@ -508,40 +508,11 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
-      copied configuration does not match position in animation file:\n\t'calf_l'
-      : position error = 4.518779 mm\n\t'foot_l' : position error = 1.718237 mm\n\t'calf_r'
-      : position error = 2.951506 mm\n\t'foot_r' : position error = 3.357264 mm\n"
+    rigImportErrors: "Copied Avatar Rig Configuration mis-match. Transform hierarchy
+      does not match:\n\tTransform 'mixamorig:Hips' for human bone 'Hips' not found\n"
+    rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'GhostSamurai_APose_Slide_Loop' has import animation
-      warnings that might lower retargeting quality:\nNote: Activate translation
-      DOF on avatar to improve retargeting quality.\n\t'spine_01' has translation
-      animation that will be discarded.\n\t'spine_02' has translation animation that
-      will be discarded.\n\t'spine_03' has translation animation that will be discarded.\n\t'clavicle_l'
-      has translation animation that will be discarded.\n\t'upperarm_l' has translation
-      animation that will be discarded.\n\t'lowerarm_l' has translation animation
-      that will be discarded.\n\t'hand_l' has translation animation that will be
-      discarded.\n\t'index_01_l' has translation animation that will be discarded.\n\t'index_02_l'
-      has translation animation that will be discarded.\n\t'index_03_l' has translation
-      animation that will be discarded.\n\t'middle_01_l' has translation animation
-      that will be discarded.\n\t'middle_02_l' has translation animation that will
-      be discarded.\n\t'middle_03_l' has translation animation that will be discarded.\n\t'pinky_01_l'
-      has translation animation that will be discarded.\n\t'pinky_02_l' has translation
-      animation that will be discarded.\n\t'pinky_03_l' has translation animation
-      that will be discarded.\n\t'ring_01_l' has translation animation that will
-      be discarded.\n\t'ring_02_l' has translation animation that will be discarded.\n\t'thumb_01_l'
-      has translation animation that will be discarded.\n\t'thumb_02_l' has translation
-      animation that will be discarded.\n\t'thumb_03_l' has translation animation
-      that will be discarded.\n\t'clavicle_r' has translation animation that will
-      be discarded.\n\t'upperarm_r' has translation animation that will be discarded.\n\t'lowerarm_r'
-      has translation animation that will be discarded.\n\t'hand_r' has translation
-      animation that will be discarded.\n\t'head' has translation animation that
-      will be discarded.\n\t'calf_l' has translation animation that will be discarded.\n\t'foot_l'
-      has translation animation that will be discarded.\n\t'ball_l' has translation
-      animation that will be discarded.\n\t'calf_r' has translation animation that
-      will be discarded.\n\t'foot_r' has translation animation that will be discarded.\n\t'ball_r'
-      has translation animation that will be discarded.\n"
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -558,7 +529,7 @@ ModelImporter:
       name: GhostSamurai_APose_Slide_Start_Inplace
       takeName: GhostSamurai_APose_Slide_Start_Inplace
       internalID: 0
-      firstFrame: 8.1
+      firstFrame: 5.1
       lastFrame: 14
       wrapMode: 0
       orientationOffsetY: 0
@@ -579,6 +550,13 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.07667976
+        functionName: AnimStop
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.32037434
         functionName: Slide
         data: 
@@ -586,10 +564,11 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.35751966
-        functionName: AnimStop
+      - time: 0.41209102
+        functionName: SendAttack
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11400000, guid: 32ac124ce8c3601459d80368215302fd,
+          type: 2}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -605,14 +584,6 @@ ModelImporter:
         functionName: AnimGo
         data: 
         objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.556448
-        functionName: SendAttack
-        data: 
-        objectReferenceParameter: {fileID: 11400000, guid: 32ac124ce8c3601459d80368215302fd,
-          type: 2}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

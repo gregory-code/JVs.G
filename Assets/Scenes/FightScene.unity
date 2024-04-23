@@ -4329,7 +4329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 1501908165}
-  minutes: 1
+  minutes: 8
   winnerText: {fileID: 103219703}
   winnerAnimator: {fileID: 103219702}
   nextRoundImage: {fileID: 142961729}

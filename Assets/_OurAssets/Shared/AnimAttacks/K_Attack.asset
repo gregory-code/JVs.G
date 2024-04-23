@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: K_Attack
   m_EditorClassIdentifier: 
   hitBoxID: 0
-  range: 1.3
+  range: 1.6
   damage: 2
   knockbackX: 1.5
   knockbackY: 0
