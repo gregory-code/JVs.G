@@ -2,7 +2,7 @@
     "name": "PlayerInputActions",
     "maps": [
         {
-            "name": "Player",
+            "name": "Grappler",
             "id": "365cd4ae-cf9e-4d47-881c-0c262d64e6c6",
             "actions": [
                 {
@@ -54,6 +54,15 @@
                     "name": "HoldingDown",
                     "type": "Button",
                     "id": "3e212549-d2e7-4b3d-882d-ecaf5b35ec13",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Menu",
+                    "type": "Button",
+                    "id": "202f9b5b-598f-478e-aafc-360c87ccae83",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -181,11 +190,22 @@
                     "action": "Special",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4e697e38-789b-4b09-9885-4e337bc4c837",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
         {
-            "name": "Player1",
+            "name": "Knight",
             "id": "b498dc0f-6cb0-4fb6-9221-7c6e2c10d65f",
             "actions": [
                 {
@@ -313,7 +333,7 @@
                 {
                     "name": "",
                     "id": "c5c94021-9034-4569-80f7-190d6ffdda42",
-                    "path": "<Keyboard>/numpad0",
+                    "path": "<Keyboard>/b",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -324,7 +344,7 @@
                 {
                     "name": "",
                     "id": "014cb464-fe85-478d-a764-bc7e88894cbc",
-                    "path": "<Keyboard>/numpad1",
+                    "path": "<Keyboard>/n",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
@@ -357,7 +377,7 @@
                 {
                     "name": "",
                     "id": "a5bf8df2-80a3-425d-b216-cdb4b2e8a7fd",
-                    "path": "<Keyboard>/numpad2",
+                    "path": "<Keyboard>/m",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
@@ -366,6 +386,12 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Menu",
+            "id": "c4a83b27-eb5b-416b-a0a1-43077a426ec6",
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": []

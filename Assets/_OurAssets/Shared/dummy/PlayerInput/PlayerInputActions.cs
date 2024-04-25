@@ -24,7 +24,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     ""name"": ""PlayerInputActions"",
     ""maps"": [
         {
-            ""name"": ""Player"",
+            ""name"": ""Grappler"",
             ""id"": ""365cd4ae-cf9e-4d47-881c-0c262d64e6c6"",
             ""actions"": [
                 {
@@ -76,6 +76,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""HoldingDown"",
                     ""type"": ""Button"",
                     ""id"": ""3e212549-d2e7-4b3d-882d-ecaf5b35ec13"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""202f9b5b-598f-478e-aafc-360c87ccae83"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -203,11 +212,22 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Special"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e697e38-789b-4b09-9885-4e337bc4c837"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
         {
-            ""name"": ""Player1"",
+            ""name"": ""Knight"",
             ""id"": ""b498dc0f-6cb0-4fb6-9221-7c6e2c10d65f"",
             ""actions"": [
                 {
@@ -335,7 +355,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c5c94021-9034-4569-80f7-190d6ffdda42"",
-                    ""path"": ""<Keyboard>/numpad0"",
+                    ""path"": ""<Keyboard>/b"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -346,7 +366,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""014cb464-fe85-478d-a764-bc7e88894cbc"",
-                    ""path"": ""<Keyboard>/numpad1"",
+                    ""path"": ""<Keyboard>/n"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
@@ -379,7 +399,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a5bf8df2-80a3-425d-b216-cdb4b2e8a7fd"",
-                    ""path"": ""<Keyboard>/numpad2"",
+                    ""path"": ""<Keyboard>/m"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
@@ -388,26 +408,35 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Menu"",
+            ""id"": ""c4a83b27-eb5b-416b-a0a1-43077a426ec6"",
+            ""actions"": [],
+            ""bindings"": []
         }
     ],
     ""controlSchemes"": []
 }");
-        // Player
-        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
-        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
-        m_Player_Special = m_Player.FindAction("Special", throwIfNotFound: true);
-        m_Player_HoldingUp = m_Player.FindAction("HoldingUp", throwIfNotFound: true);
-        m_Player_HoldingDown = m_Player.FindAction("HoldingDown", throwIfNotFound: true);
-        // Player1
-        m_Player1 = asset.FindActionMap("Player1", throwIfNotFound: true);
-        m_Player1_Movement = m_Player1.FindAction("Movement", throwIfNotFound: true);
-        m_Player1_Jump = m_Player1.FindAction("Jump", throwIfNotFound: true);
-        m_Player1_Attack = m_Player1.FindAction("Attack", throwIfNotFound: true);
-        m_Player1_Special = m_Player1.FindAction("Special", throwIfNotFound: true);
-        m_Player1_HoldingUp = m_Player1.FindAction("HoldingUp", throwIfNotFound: true);
-        m_Player1_HoldingDown = m_Player1.FindAction("HoldingDown", throwIfNotFound: true);
+        // Grappler
+        m_Grappler = asset.FindActionMap("Grappler", throwIfNotFound: true);
+        m_Grappler_Movement = m_Grappler.FindAction("Movement", throwIfNotFound: true);
+        m_Grappler_Jump = m_Grappler.FindAction("Jump", throwIfNotFound: true);
+        m_Grappler_Attack = m_Grappler.FindAction("Attack", throwIfNotFound: true);
+        m_Grappler_Special = m_Grappler.FindAction("Special", throwIfNotFound: true);
+        m_Grappler_HoldingUp = m_Grappler.FindAction("HoldingUp", throwIfNotFound: true);
+        m_Grappler_HoldingDown = m_Grappler.FindAction("HoldingDown", throwIfNotFound: true);
+        m_Grappler_Menu = m_Grappler.FindAction("Menu", throwIfNotFound: true);
+        // Knight
+        m_Knight = asset.FindActionMap("Knight", throwIfNotFound: true);
+        m_Knight_Movement = m_Knight.FindAction("Movement", throwIfNotFound: true);
+        m_Knight_Jump = m_Knight.FindAction("Jump", throwIfNotFound: true);
+        m_Knight_Attack = m_Knight.FindAction("Attack", throwIfNotFound: true);
+        m_Knight_Special = m_Knight.FindAction("Special", throwIfNotFound: true);
+        m_Knight_HoldingUp = m_Knight.FindAction("HoldingUp", throwIfNotFound: true);
+        m_Knight_HoldingDown = m_Knight.FindAction("HoldingDown", throwIfNotFound: true);
+        // Menu
+        m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -466,34 +495,128 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Player
-    private readonly InputActionMap m_Player;
-    private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_Movement;
-    private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_Attack;
-    private readonly InputAction m_Player_Special;
-    private readonly InputAction m_Player_HoldingUp;
-    private readonly InputAction m_Player_HoldingDown;
-    public struct PlayerActions
+    // Grappler
+    private readonly InputActionMap m_Grappler;
+    private List<IGrapplerActions> m_GrapplerActionsCallbackInterfaces = new List<IGrapplerActions>();
+    private readonly InputAction m_Grappler_Movement;
+    private readonly InputAction m_Grappler_Jump;
+    private readonly InputAction m_Grappler_Attack;
+    private readonly InputAction m_Grappler_Special;
+    private readonly InputAction m_Grappler_HoldingUp;
+    private readonly InputAction m_Grappler_HoldingDown;
+    private readonly InputAction m_Grappler_Menu;
+    public struct GrapplerActions
     {
         private @PlayerInputActions m_Wrapper;
-        public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Movement => m_Wrapper.m_Player_Movement;
-        public InputAction @Jump => m_Wrapper.m_Player_Jump;
-        public InputAction @Attack => m_Wrapper.m_Player_Attack;
-        public InputAction @Special => m_Wrapper.m_Player_Special;
-        public InputAction @HoldingUp => m_Wrapper.m_Player_HoldingUp;
-        public InputAction @HoldingDown => m_Wrapper.m_Player_HoldingDown;
-        public InputActionMap Get() { return m_Wrapper.m_Player; }
+        public GrapplerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Movement => m_Wrapper.m_Grappler_Movement;
+        public InputAction @Jump => m_Wrapper.m_Grappler_Jump;
+        public InputAction @Attack => m_Wrapper.m_Grappler_Attack;
+        public InputAction @Special => m_Wrapper.m_Grappler_Special;
+        public InputAction @HoldingUp => m_Wrapper.m_Grappler_HoldingUp;
+        public InputAction @HoldingDown => m_Wrapper.m_Grappler_HoldingDown;
+        public InputAction @Menu => m_Wrapper.m_Grappler_Menu;
+        public InputActionMap Get() { return m_Wrapper.m_Grappler; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerActions instance)
+        public static implicit operator InputActionMap(GrapplerActions set) { return set.Get(); }
+        public void AddCallbacks(IGrapplerActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_GrapplerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_GrapplerActionsCallbackInterfaces.Add(instance);
+            @Movement.started += instance.OnMovement;
+            @Movement.performed += instance.OnMovement;
+            @Movement.canceled += instance.OnMovement;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
+            @Special.started += instance.OnSpecial;
+            @Special.performed += instance.OnSpecial;
+            @Special.canceled += instance.OnSpecial;
+            @HoldingUp.started += instance.OnHoldingUp;
+            @HoldingUp.performed += instance.OnHoldingUp;
+            @HoldingUp.canceled += instance.OnHoldingUp;
+            @HoldingDown.started += instance.OnHoldingDown;
+            @HoldingDown.performed += instance.OnHoldingDown;
+            @HoldingDown.canceled += instance.OnHoldingDown;
+            @Menu.started += instance.OnMenu;
+            @Menu.performed += instance.OnMenu;
+            @Menu.canceled += instance.OnMenu;
+        }
+
+        private void UnregisterCallbacks(IGrapplerActions instance)
+        {
+            @Movement.started -= instance.OnMovement;
+            @Movement.performed -= instance.OnMovement;
+            @Movement.canceled -= instance.OnMovement;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
+            @Special.started -= instance.OnSpecial;
+            @Special.performed -= instance.OnSpecial;
+            @Special.canceled -= instance.OnSpecial;
+            @HoldingUp.started -= instance.OnHoldingUp;
+            @HoldingUp.performed -= instance.OnHoldingUp;
+            @HoldingUp.canceled -= instance.OnHoldingUp;
+            @HoldingDown.started -= instance.OnHoldingDown;
+            @HoldingDown.performed -= instance.OnHoldingDown;
+            @HoldingDown.canceled -= instance.OnHoldingDown;
+            @Menu.started -= instance.OnMenu;
+            @Menu.performed -= instance.OnMenu;
+            @Menu.canceled -= instance.OnMenu;
+        }
+
+        public void RemoveCallbacks(IGrapplerActions instance)
+        {
+            if (m_Wrapper.m_GrapplerActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IGrapplerActions instance)
+        {
+            foreach (var item in m_Wrapper.m_GrapplerActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_GrapplerActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public GrapplerActions @Grappler => new GrapplerActions(this);
+
+    // Knight
+    private readonly InputActionMap m_Knight;
+    private List<IKnightActions> m_KnightActionsCallbackInterfaces = new List<IKnightActions>();
+    private readonly InputAction m_Knight_Movement;
+    private readonly InputAction m_Knight_Jump;
+    private readonly InputAction m_Knight_Attack;
+    private readonly InputAction m_Knight_Special;
+    private readonly InputAction m_Knight_HoldingUp;
+    private readonly InputAction m_Knight_HoldingDown;
+    public struct KnightActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public KnightActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Movement => m_Wrapper.m_Knight_Movement;
+        public InputAction @Jump => m_Wrapper.m_Knight_Jump;
+        public InputAction @Attack => m_Wrapper.m_Knight_Attack;
+        public InputAction @Special => m_Wrapper.m_Knight_Special;
+        public InputAction @HoldingUp => m_Wrapper.m_Knight_HoldingUp;
+        public InputAction @HoldingDown => m_Wrapper.m_Knight_HoldingDown;
+        public InputActionMap Get() { return m_Wrapper.m_Knight; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(KnightActions set) { return set.Get(); }
+        public void AddCallbacks(IKnightActions instance)
+        {
+            if (instance == null || m_Wrapper.m_KnightActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_KnightActionsCallbackInterfaces.Add(instance);
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
@@ -514,7 +637,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @HoldingDown.canceled += instance.OnHoldingDown;
         }
 
-        private void UnregisterCallbacks(IPlayerActions instance)
+        private void UnregisterCallbacks(IKnightActions instance)
         {
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
@@ -536,108 +659,70 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @HoldingDown.canceled -= instance.OnHoldingDown;
         }
 
-        public void RemoveCallbacks(IPlayerActions instance)
+        public void RemoveCallbacks(IKnightActions instance)
         {
-            if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_KnightActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerActions instance)
+        public void SetCallbacks(IKnightActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_KnightActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_KnightActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerActions @Player => new PlayerActions(this);
+    public KnightActions @Knight => new KnightActions(this);
 
-    // Player1
-    private readonly InputActionMap m_Player1;
-    private List<IPlayer1Actions> m_Player1ActionsCallbackInterfaces = new List<IPlayer1Actions>();
-    private readonly InputAction m_Player1_Movement;
-    private readonly InputAction m_Player1_Jump;
-    private readonly InputAction m_Player1_Attack;
-    private readonly InputAction m_Player1_Special;
-    private readonly InputAction m_Player1_HoldingUp;
-    private readonly InputAction m_Player1_HoldingDown;
-    public struct Player1Actions
+    // Menu
+    private readonly InputActionMap m_Menu;
+    private List<IMenuActions> m_MenuActionsCallbackInterfaces = new List<IMenuActions>();
+    public struct MenuActions
     {
         private @PlayerInputActions m_Wrapper;
-        public Player1Actions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Movement => m_Wrapper.m_Player1_Movement;
-        public InputAction @Jump => m_Wrapper.m_Player1_Jump;
-        public InputAction @Attack => m_Wrapper.m_Player1_Attack;
-        public InputAction @Special => m_Wrapper.m_Player1_Special;
-        public InputAction @HoldingUp => m_Wrapper.m_Player1_HoldingUp;
-        public InputAction @HoldingDown => m_Wrapper.m_Player1_HoldingDown;
-        public InputActionMap Get() { return m_Wrapper.m_Player1; }
+        public MenuActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputActionMap Get() { return m_Wrapper.m_Menu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(Player1Actions set) { return set.Get(); }
-        public void AddCallbacks(IPlayer1Actions instance)
+        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
+        public void AddCallbacks(IMenuActions instance)
         {
-            if (instance == null || m_Wrapper.m_Player1ActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_Player1ActionsCallbackInterfaces.Add(instance);
-            @Movement.started += instance.OnMovement;
-            @Movement.performed += instance.OnMovement;
-            @Movement.canceled += instance.OnMovement;
-            @Jump.started += instance.OnJump;
-            @Jump.performed += instance.OnJump;
-            @Jump.canceled += instance.OnJump;
-            @Attack.started += instance.OnAttack;
-            @Attack.performed += instance.OnAttack;
-            @Attack.canceled += instance.OnAttack;
-            @Special.started += instance.OnSpecial;
-            @Special.performed += instance.OnSpecial;
-            @Special.canceled += instance.OnSpecial;
-            @HoldingUp.started += instance.OnHoldingUp;
-            @HoldingUp.performed += instance.OnHoldingUp;
-            @HoldingUp.canceled += instance.OnHoldingUp;
-            @HoldingDown.started += instance.OnHoldingDown;
-            @HoldingDown.performed += instance.OnHoldingDown;
-            @HoldingDown.canceled += instance.OnHoldingDown;
+            if (instance == null || m_Wrapper.m_MenuActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MenuActionsCallbackInterfaces.Add(instance);
         }
 
-        private void UnregisterCallbacks(IPlayer1Actions instance)
+        private void UnregisterCallbacks(IMenuActions instance)
         {
-            @Movement.started -= instance.OnMovement;
-            @Movement.performed -= instance.OnMovement;
-            @Movement.canceled -= instance.OnMovement;
-            @Jump.started -= instance.OnJump;
-            @Jump.performed -= instance.OnJump;
-            @Jump.canceled -= instance.OnJump;
-            @Attack.started -= instance.OnAttack;
-            @Attack.performed -= instance.OnAttack;
-            @Attack.canceled -= instance.OnAttack;
-            @Special.started -= instance.OnSpecial;
-            @Special.performed -= instance.OnSpecial;
-            @Special.canceled -= instance.OnSpecial;
-            @HoldingUp.started -= instance.OnHoldingUp;
-            @HoldingUp.performed -= instance.OnHoldingUp;
-            @HoldingUp.canceled -= instance.OnHoldingUp;
-            @HoldingDown.started -= instance.OnHoldingDown;
-            @HoldingDown.performed -= instance.OnHoldingDown;
-            @HoldingDown.canceled -= instance.OnHoldingDown;
         }
 
-        public void RemoveCallbacks(IPlayer1Actions instance)
+        public void RemoveCallbacks(IMenuActions instance)
         {
-            if (m_Wrapper.m_Player1ActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_MenuActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayer1Actions instance)
+        public void SetCallbacks(IMenuActions instance)
         {
-            foreach (var item in m_Wrapper.m_Player1ActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_MenuActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_Player1ActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_MenuActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public Player1Actions @Player1 => new Player1Actions(this);
-    public interface IPlayerActions
+    public MenuActions @Menu => new MenuActions(this);
+    public interface IGrapplerActions
+    {
+        void OnMovement(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
+        void OnSpecial(InputAction.CallbackContext context);
+        void OnHoldingUp(InputAction.CallbackContext context);
+        void OnHoldingDown(InputAction.CallbackContext context);
+        void OnMenu(InputAction.CallbackContext context);
+    }
+    public interface IKnightActions
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
@@ -646,13 +731,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnHoldingUp(InputAction.CallbackContext context);
         void OnHoldingDown(InputAction.CallbackContext context);
     }
-    public interface IPlayer1Actions
+    public interface IMenuActions
     {
-        void OnMovement(InputAction.CallbackContext context);
-        void OnJump(InputAction.CallbackContext context);
-        void OnAttack(InputAction.CallbackContext context);
-        void OnSpecial(InputAction.CallbackContext context);
-        void OnHoldingUp(InputAction.CallbackContext context);
-        void OnHoldingDown(InputAction.CallbackContext context);
     }
 }

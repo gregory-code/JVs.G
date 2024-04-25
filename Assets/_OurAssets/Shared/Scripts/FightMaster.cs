@@ -19,6 +19,7 @@ public class FightMaster : MonoBehaviour
 
     [SerializeField] Image nextRoundImage;
     [SerializeField] FightCamera fightCamera;
+    [SerializeField] Menu menu;
 
     bool loading;
 
@@ -26,6 +27,8 @@ public class FightMaster : MonoBehaviour
     [SerializeField] CharacterBase Knight;
     [SerializeField] Transform Spawn1;
     [SerializeField] Transform Spawn2;
+
+    AudioSource currentSong;
 
     [SerializeField] GameObject[] p1Wins;
     [SerializeField] GameObject[] p2Wins;
@@ -43,6 +46,13 @@ public class FightMaster : MonoBehaviour
         p2 = Instantiate(Knight, Spawn2.transform.position, Spawn2.transform.rotation);
 
         fightCamera.SetUp(p1, p2);
+        menu.GetPlayers(p1, p2);
+
+        if(currentSong != null)
+            currentSong.Stop();
+
+        currentSong = GameObject.Find("" + Random.Range(1, 9)).GetComponent<AudioSource>();
+        currentSong.Play();
 
         StartCoroutine(Timer());
     }
@@ -55,6 +65,8 @@ public class FightMaster : MonoBehaviour
 
     IEnumerator Timer()
     {
+        minutes = 1;
+        seconds = 30;
         winnerText.text = "";
         winnerAnimator.SetTrigger("Hide");
         timerText.text = $"{minutes}:{seconds}";
@@ -103,7 +115,9 @@ public class FightMaster : MonoBehaviour
 
     public void Winner(bool p1Won)
     {
-        if(p1Won)
+        StopCoroutine(Timer());
+
+        if (p1Won)
         {
             winnerAnimator.SetTrigger("P1");
             winnerText.text = "Player 1 Wins";

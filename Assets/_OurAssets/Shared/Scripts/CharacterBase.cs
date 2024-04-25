@@ -56,11 +56,6 @@ public class CharacterBase : MonoBehaviour
 
     [SerializeField] float groundCheck;
 
-    private float maxMeter = 100;
-    private float currentMeter = 0;
-    private Image meterBar;
-    private TextMeshProUGUI meterBarText;
-
     [SerializeField] Transform[] hitBoxes;
     [SerializeField] float testRange;
 
@@ -87,21 +82,17 @@ public class CharacterBase : MonoBehaviour
 
         if (isPlayer1)
         {
-            playerInput.Player.Enable();
+            playerInput.Grappler.Enable();
         }
         else
         {
-            playerInput.Player1.Enable();
+            playerInput.Knight.Enable();
         }
 
         string ID = (isPlayer1) ? "P1" : "P2";
         healthBar = GameObject.Find(ID + "health").GetComponent<Image>();
-        meterBar = GameObject.Find(ID + "special").GetComponent<Image>();
-        meterBarText = GameObject.Find(ID + "MeterText").GetComponent<TextMeshProUGUI>();
 
         healthBar.fillAmount = 1;
-        meterBar.fillAmount = 0;
-        meterBarText.text = "Meter: " + currentMeter + "%";
 
         StartCoroutine(DelaySetup());
     }
@@ -111,6 +102,11 @@ public class CharacterBase : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         otherGuy = (isPlayer1) ? GameObject.FindGameObjectWithTag("P2").GetComponent<CharacterBase>() : GameObject.FindGameObjectWithTag("P1").GetComponent<CharacterBase>();
+    }
+
+    public PlayerInputActions GetInput()
+    {
+        return playerInput;
     }
 
     void Update()
@@ -152,7 +148,6 @@ public class CharacterBase : MonoBehaviour
     private void ManageBars()
     {
         healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, currentHealth / maxHealth, 10 * Time.deltaTime);
-        meterBar.fillAmount = Mathf.Lerp(meterBar.fillAmount, currentMeter / maxMeter, 10 * Time.deltaTime);
     }
 
     public float GetRemainingHealth()
@@ -232,7 +227,7 @@ public class CharacterBase : MonoBehaviour
         }
 
         Vector3 rotateDir = (facingRight) ? Vector3.one : new Vector3(-1,1,-1) ;
-        transform.localScale = Vector3.Lerp(transform.localScale, rotateDir, 12 * Time.deltaTime);
+        transform.localScale = Vector3.Lerp(transform.localScale, rotateDir, 20 * Time.deltaTime);
     }
 
     private void Movement()
@@ -240,11 +235,11 @@ public class CharacterBase : MonoBehaviour
         if (isHoldingDown)
             return;
 
-        Vector2 inputVector = playerInput.Player.Movement.ReadValue<Vector2>();
+        Vector2 inputVector = playerInput.Grappler.Movement.ReadValue<Vector2>();
 
         if (!isPlayer1)
         {
-            inputVector = playerInput.Player1.Movement.ReadValue<Vector2>();
+            inputVector = playerInput.Knight.Movement.ReadValue<Vector2>();
         }
 
         moveDirection = new Vector3(inputVector.x, 0, inputVector.y);
@@ -368,7 +363,7 @@ public class CharacterBase : MonoBehaviour
         //characterController.enabled = false;
         zoomies = true;
 
-        Vector2 inputVector = playerInput.Player1.Movement.ReadValue<Vector2>();
+        Vector2 inputVector = playerInput.Knight.Movement.ReadValue<Vector2>();
         Vector3 teleport = otherGuy.transform.position;
 
         if (inputVector.x > 0)
@@ -454,6 +449,7 @@ public class CharacterBase : MonoBehaviour
         if (context.performed)
         {
             isHoldingUp = true;
+            FindObjectOfType<Menu>().MoveUp();
         }
 
         if(context.canceled)
@@ -468,6 +464,7 @@ public class CharacterBase : MonoBehaviour
         {
             isHoldingDown = true;
             animator.SetBool("crouching", true);
+            FindObjectOfType<Menu>().MoveDown();
             Debug.Log(isHoldingDown);
         }
 
@@ -556,15 +553,13 @@ public class CharacterBase : MonoBehaviour
         GameObject localDamageEffect = Instantiate(damageEffect, transform);
         damageEffect.transform.position = pos;
 
-        if (currentAnimSpeed <= -0.6f)
+        if (currentAnimSpeed <= -0.6f && isIncapacitated == false && isGrounded)
         {
             animator.SetTrigger("guard");
             StartCoroutine(IncapacitatedDuration(0.5f));
-            AddMeter(damage / 2);
             return false;
         }
 
-        AddMeter(damage);
         currentHealth -= damage;
 
         if (currentHealth <= 0)
@@ -592,6 +587,14 @@ public class CharacterBase : MonoBehaviour
         GameObject newSlash = Instantiate(slash, slashPos);
         newSlash.transform.localPosition = Vector3.zero;
         Destroy(newSlash, 1);
+    }
+
+    public void Menu(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            FindObjectOfType<Menu>().ChangeMenuState();
+        }
     }
 
     public void SlashGround()
@@ -728,25 +731,6 @@ public class CharacterBase : MonoBehaviour
         canAttack = true;
         isIncapacitated = false;
 
-    }
-
-    public bool TryUseMeter(float meterCost)
-    {
-        if(currentMeter > meterCost)
-        {
-            currentMeter -= meterCost;
-            meterBarText.text = "Meter: " + currentMeter + "%";
-            return true;
-        }
-
-        return false;
-    }
-
-    public void AddMeter(float meterAdded)
-    {
-        currentMeter += meterAdded;
-        currentMeter = Mathf.Clamp(currentMeter, 0, maxMeter);
-        meterBarText.text = "Meter: " + currentMeter + "%";
     }
 
     private void OnDrawGizmos()
