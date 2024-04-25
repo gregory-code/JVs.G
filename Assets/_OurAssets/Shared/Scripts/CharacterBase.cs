@@ -586,6 +586,7 @@ public class CharacterBase : MonoBehaviour
         zoomies = false;
         GameObject newSlash = Instantiate(slash, slashPos);
         newSlash.transform.localPosition = Vector3.zero;
+        GameObject.Find("slice" + 0).GetComponent<AudioSource>().Play();
         Destroy(newSlash, 1);
     }
 
@@ -648,6 +649,7 @@ public class CharacterBase : MonoBehaviour
     {
         StopAllCoroutines();
         animator.SetTrigger("grab");
+        GameObject.Find("hit" + UnityEngine.Random.Range(0,3)).GetComponent<AudioSource>().Play();
         StartCoroutine(IncapacitatedDuration(2));
     }
 
@@ -655,6 +657,7 @@ public class CharacterBase : MonoBehaviour
     {
         StopAllCoroutines();
         animator.SetTrigger("executed");
+        GameObject.Find("bloodBlade").GetComponent<AudioSource>().Play();
         StartCoroutine(IncapacitatedDuration(2));
     }
 
