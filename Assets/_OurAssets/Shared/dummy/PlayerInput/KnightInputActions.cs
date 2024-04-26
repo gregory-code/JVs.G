@@ -80,6 +80,15 @@ public partial class @KnightInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""a066b77e-48cd-4c93-9352-cd6cd58348e9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -130,7 +139,7 @@ public partial class @KnightInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""6e92f2be-dee2-4d07-a695-31d689c93bb9"",
-                    ""path"": ""<DualSenseGamepadHID>/leftStick/left"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -141,7 +150,40 @@ public partial class @KnightInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""b6d90eb9-f3c1-461f-901f-33865a61e013"",
-                    ""path"": ""<DualSenseGamepadHID>/leftStick/right"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""DuelShock"",
+                    ""id"": ""74510857-c23c-45f7-b82c-de6ba3ba0373"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""79e53ae1-4642-4dfd-ae11-de8fc39b9476"",
+                    ""path"": ""<DualSenseGamepadHID>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""95915759-e703-4084-a122-d67a9f205b78"",
+                    ""path"": ""<DualSenseGamepadHID>/rightStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -151,7 +193,7 @@ public partial class @KnightInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3ee60b9d-9d50-4f00-8bfe-8b735f38a73f"",
+                    ""id"": ""495e54af-8cd8-4f43-a1a8-1f7c2c52766b"",
                     ""path"": ""<Keyboard>/numpad0"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -162,8 +204,30 @@ public partial class @KnightInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""38ac68dd-5e5e-4c98-b560-637188b21204"",
+                    ""id"": ""3ee60b9d-9d50-4f00-8bfe-8b735f38a73f"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""67af13a3-3779-4b6c-b018-5e09fd82a54b"",
                     ""path"": ""<Keyboard>/numpad1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""38ac68dd-5e5e-4c98-b560-637188b21204"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
@@ -173,8 +237,19 @@ public partial class @KnightInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""768647b7-e689-42fa-aa1c-59b4c4ebebbe"",
+                    ""id"": ""1beaf74f-c751-4269-87b2-cd32315acb2d"",
                     ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HoldingUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""768647b7-e689-42fa-aa1c-59b4c4ebebbe"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
@@ -184,8 +259,30 @@ public partial class @KnightInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""32a91036-2ac6-4e91-a818-6a2cdb630ecd"",
+                    ""id"": ""40008ba9-6e9a-43ad-9c8b-1985b3812b98"",
+                    ""path"": ""<DualSenseGamepadHID>/rightStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HoldingUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6c2ddced-b65d-4a5b-84c2-aab671a48387"",
                     ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HoldingDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""32a91036-2ac6-4e91-a818-6a2cdb630ecd"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
@@ -195,12 +292,56 @@ public partial class @KnightInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""40348bd1-9b1b-455a-8ea7-9cc227134f57"",
+                    ""id"": ""3bcc78f5-6791-47a8-9d52-fe9755eb2d14"",
+                    ""path"": ""<DualSenseGamepadHID>/rightStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HoldingDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""59a24235-044b-45c9-ba83-4cba7560810e"",
                     ""path"": ""<Keyboard>/numpad2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Special"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""40348bd1-9b1b-455a-8ea7-9cc227134f57"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Special"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0c997cd5-ee36-472c-84e3-7728ecb5c830"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d7e618ab-2e6e-4c7d-a0df-99a846e514da"",
+                    ""path"": ""<DualSenseGamepadHID>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -217,6 +358,7 @@ public partial class @KnightInputActions: IInputActionCollection2, IDisposable
         m_Knight_Special = m_Knight.FindAction("Special", throwIfNotFound: true);
         m_Knight_HoldingUp = m_Knight.FindAction("HoldingUp", throwIfNotFound: true);
         m_Knight_HoldingDown = m_Knight.FindAction("HoldingDown", throwIfNotFound: true);
+        m_Knight_Menu = m_Knight.FindAction("Menu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -284,6 +426,7 @@ public partial class @KnightInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Knight_Special;
     private readonly InputAction m_Knight_HoldingUp;
     private readonly InputAction m_Knight_HoldingDown;
+    private readonly InputAction m_Knight_Menu;
     public struct KnightActions
     {
         private @KnightInputActions m_Wrapper;
@@ -294,6 +437,7 @@ public partial class @KnightInputActions: IInputActionCollection2, IDisposable
         public InputAction @Special => m_Wrapper.m_Knight_Special;
         public InputAction @HoldingUp => m_Wrapper.m_Knight_HoldingUp;
         public InputAction @HoldingDown => m_Wrapper.m_Knight_HoldingDown;
+        public InputAction @Menu => m_Wrapper.m_Knight_Menu;
         public InputActionMap Get() { return m_Wrapper.m_Knight; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -321,6 +465,9 @@ public partial class @KnightInputActions: IInputActionCollection2, IDisposable
             @HoldingDown.started += instance.OnHoldingDown;
             @HoldingDown.performed += instance.OnHoldingDown;
             @HoldingDown.canceled += instance.OnHoldingDown;
+            @Menu.started += instance.OnMenu;
+            @Menu.performed += instance.OnMenu;
+            @Menu.canceled += instance.OnMenu;
         }
 
         private void UnregisterCallbacks(IKnightActions instance)
@@ -343,6 +490,9 @@ public partial class @KnightInputActions: IInputActionCollection2, IDisposable
             @HoldingDown.started -= instance.OnHoldingDown;
             @HoldingDown.performed -= instance.OnHoldingDown;
             @HoldingDown.canceled -= instance.OnHoldingDown;
+            @Menu.started -= instance.OnMenu;
+            @Menu.performed -= instance.OnMenu;
+            @Menu.canceled -= instance.OnMenu;
         }
 
         public void RemoveCallbacks(IKnightActions instance)
@@ -368,5 +518,6 @@ public partial class @KnightInputActions: IInputActionCollection2, IDisposable
         void OnSpecial(InputAction.CallbackContext context);
         void OnHoldingUp(InputAction.CallbackContext context);
         void OnHoldingDown(InputAction.CallbackContext context);
+        void OnMenu(InputAction.CallbackContext context);
     }
 }

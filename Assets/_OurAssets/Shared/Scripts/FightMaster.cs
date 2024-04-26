@@ -126,7 +126,7 @@ public class FightMaster : MonoBehaviour
             if(p1WinCount == 2)
             {
                 p1Wins[1].SetActive(true);
-                // game ends
+                fightCamera.GameEnd(true);
             }
 
             if (p1WinCount == 1)
@@ -145,7 +145,7 @@ public class FightMaster : MonoBehaviour
             if (p2WinCount == 2)
             {
                 p2Wins[1].SetActive(true);
-                // game ends
+                fightCamera.GameEnd(false);
             }
 
             if (p2WinCount == 1)

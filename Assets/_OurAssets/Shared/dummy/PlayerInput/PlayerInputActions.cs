@@ -126,39 +126,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""Controller"",
-                    ""id"": ""c3d27ddd-916c-4c28-b891-e7cb37f36a50"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""d94a316e-8737-4f1b-98ee-7f4e5085059a"",
-                    ""path"": ""<DualSenseGamepadHID>/leftStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""ddb54fc7-71e1-4f52-ad3e-51938c326cdb"",
-                    ""path"": ""<DualSenseGamepadHID>/leftStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""f855b623-269c-4ed2-be09-ce8bf8ab78f5"",
                     ""path"": ""<Keyboard>/space"",

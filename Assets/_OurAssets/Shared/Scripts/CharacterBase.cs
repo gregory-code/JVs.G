@@ -43,9 +43,6 @@ public class CharacterBase : MonoBehaviour
     private bool isDead;
     private bool facingRight;
 
-    public delegate void OnAttackFoward();
-    public event OnAttackFoward onAttackFoward;
-
     private float currentAnimSpeed;
 
     private bool canAttack = true;
@@ -54,6 +51,9 @@ public class CharacterBase : MonoBehaviour
     private float maxHealth = 100;
     private float currentHealth = 100;
     private Image healthBar;
+
+    public Transform winPos;
+
 
     [SerializeField] float groundCheck;
 

@@ -16,6 +16,7 @@ public class Menu : MonoBehaviour
     int currentSelection;
 
     [SerializeField] GameObject rebindScreen;
+    [SerializeField] GameObject endScreen;
 
     CharacterBase P1;
     CharacterBase P2;
