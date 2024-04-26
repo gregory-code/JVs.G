@@ -44,6 +44,7 @@ public class Fireball : MonoBehaviour
     {
         if(other.GetComponent<CharacterBase>() == otherguy)
         {
+            GameObject.Find("fireballHit").GetComponent<AudioSource>().Play();
             otherguy.ApplyDamage(6 + bonusDamage);
             otherguy.ApplyHitStun(false);
             Instantiate(explosion, transform.position, transform.rotation);

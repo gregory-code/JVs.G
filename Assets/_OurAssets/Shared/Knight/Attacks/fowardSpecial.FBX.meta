@@ -584,6 +584,13 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.37266606
+        functionName: PlaySound
+        data: bigSlice
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.39771223
         functionName: Zoom
         data: 

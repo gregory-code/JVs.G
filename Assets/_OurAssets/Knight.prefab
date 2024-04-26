@@ -798,7 +798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: dc2e3c65f3d6cc34ab87660fa4778c24,
+  m_Actions: {fileID: -944628639613478452, guid: be49b564ccd747844849141602110bf6,
     type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
@@ -814,32 +814,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 6bf3def8-f836-40d2-abc7-aea2037e784f
-    m_ActionName: Player/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: b697cc66-f308-4233-b7ed-243f36eb2568
-    m_ActionName: Player/Jump[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: cd862a00-b0c0-49b2-9ba3-64bc37d3a429
-    m_ActionName: Player/Attack[/Keyboard/p]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: dd5107a7-288b-4c25-a80d-0d2302921433
-    m_ActionName: Player/HoldingUp[/Keyboard/w]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 3e212549-d2e7-4b3d-882d-ecaf5b35ec13
-    m_ActionName: Player/HoldingDown[/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e4899c99-c7dc-4de0-9e88-7165f5ed90a5
-    m_ActionName: Player/Special[/Keyboard/o]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: f24c79f8-69bf-4a87-8711-875049661774
-    m_ActionName: Player1/Movement[/Keyboard/leftArrow,/Keyboard/rightArrow]
+    m_ActionId: 1ab0212f-918f-41bd-b2e3-fb9c4e3c9698
+    m_ActionName: Knight/Movement[/Keyboard/leftArrow,/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1124841767436732801}
@@ -854,8 +830,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: d16906b1-915b-4aa3-9532-008c9806044b
-    m_ActionName: Player1/Jump[/Keyboard/numpad3]
+    m_ActionId: a5e35e85-6b02-4fb7-8369-22f4cf749d9e
+    m_ActionName: Knight/Jump[/Keyboard/numpad0]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1124841767436732801}
@@ -870,8 +846,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: af26710b-f9a5-4fc6-b7a5-18f693a2dd5b
-    m_ActionName: Player1/Attack[/Keyboard/numpad1]
+    m_ActionId: 4071095f-d429-4822-920f-daed3e153b42
+    m_ActionName: Knight/Attack[/Keyboard/numpad1]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1124841767436732801}
@@ -886,8 +862,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 61afdddf-4a6d-4211-add0-55199f7bca1d
-    m_ActionName: Player1/Special[/Keyboard/numpad2]
+    m_ActionId: dabcdbf9-30d6-4ac9-8ef4-51ae3458a3b1
+    m_ActionName: Knight/Special[/Keyboard/numpad2]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1124841767436732801}
@@ -902,8 +878,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 03bc37b0-a754-46ab-b9a9-ca1fcc925982
-    m_ActionName: Player1/HoldingUp[/Keyboard/upArrow]
+    m_ActionId: 3ea1e332-8275-4a26-83c9-2c819cfa37ee
+    m_ActionName: Knight/HoldingUp[/Keyboard/upArrow]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1124841767436732801}
@@ -918,12 +894,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: cbbc911f-23cf-4b2c-bb5f-38e6bd01a6ae
-    m_ActionName: Player1/HoldingDown[/Keyboard/downArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 202f9b5b-598f-478e-aafc-360c87ccae83
-    m_ActionName: Player/Menu[/Keyboard/escape]
+    m_ActionId: 884513aa-5067-47af-a3d6-bd1ece8af6c1
+    m_ActionName: Knight/HoldingDown[/Keyboard/downArrow]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Knight

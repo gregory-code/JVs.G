@@ -11,6 +11,7 @@ public class CharacterBase : MonoBehaviour
 {
     private CharacterController characterController;
     private PlayerInputActions playerInput;
+    private KnightInputActions KnightInput;
     private Animator animator;
 
     [SerializeField] private bool isPlayer1;
@@ -77,16 +78,17 @@ public class CharacterBase : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         animator.SetBool("isGrappler", isGrappler);
-        playerInput = new PlayerInputActions();
 
 
         if (isPlayer1)
         {
+            playerInput = new PlayerInputActions();
             playerInput.Grappler.Enable();
         }
         else
         {
-            playerInput.Knight.Enable();
+            KnightInput = new KnightInputActions();
+            KnightInput.Knight.Enable();
         }
 
         string ID = (isPlayer1) ? "P1" : "P2";
@@ -102,11 +104,6 @@ public class CharacterBase : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         otherGuy = (isPlayer1) ? GameObject.FindGameObjectWithTag("P2").GetComponent<CharacterBase>() : GameObject.FindGameObjectWithTag("P1").GetComponent<CharacterBase>();
-    }
-
-    public PlayerInputActions GetInput()
-    {
-        return playerInput;
     }
 
     void Update()
@@ -235,11 +232,15 @@ public class CharacterBase : MonoBehaviour
         if (isHoldingDown)
             return;
 
-        Vector2 inputVector = playerInput.Grappler.Movement.ReadValue<Vector2>();
+        Vector2 inputVector = Vector2.one;
 
         if (!isPlayer1)
         {
-            inputVector = playerInput.Knight.Movement.ReadValue<Vector2>();
+            inputVector = KnightInput.Knight.Movement.ReadValue<Vector2>();
+        }
+        else
+        {
+            inputVector = playerInput.Grappler.Movement.ReadValue<Vector2>();
         }
 
         moveDirection = new Vector3(inputVector.x, 0, inputVector.y);
@@ -363,7 +364,7 @@ public class CharacterBase : MonoBehaviour
         //characterController.enabled = false;
         zoomies = true;
 
-        Vector2 inputVector = playerInput.Knight.Movement.ReadValue<Vector2>();
+        Vector2 inputVector = KnightInput.Knight.Movement.ReadValue<Vector2>();
         Vector3 teleport = otherGuy.transform.position;
 
         if (inputVector.x > 0)
@@ -586,8 +587,13 @@ public class CharacterBase : MonoBehaviour
         zoomies = false;
         GameObject newSlash = Instantiate(slash, slashPos);
         newSlash.transform.localPosition = Vector3.zero;
-        GameObject.Find("slice" + 0).GetComponent<AudioSource>().Play();
+        GameObject.Find("slice" + UnityEngine.Random.Range(1,4)).GetComponent<AudioSource>().Play();
         Destroy(newSlash, 1);
+    }
+
+    public void PlaySound(string name)
+    {
+        GameObject.Find("" + name).GetComponent<AudioSource>().Play();
     }
 
     public void Menu(InputAction.CallbackContext context)

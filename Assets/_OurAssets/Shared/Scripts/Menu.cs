@@ -68,6 +68,8 @@ public class Menu : MonoBehaviour
     {
         rebindScreen.SetActive(true);
 
+        Debug.Log(inputRef.action.actionMap);
+
         inputRef.action.Disable();
         rebindingOperation = inputRef.action.PerformInteractiveRebinding()
             .WithControlsExcluding("Mouse")
@@ -80,8 +82,6 @@ public class Menu : MonoBehaviour
 
     private void RebindFailed(InputActionReference inputRef)
     {
-        Debug.Log("Noping out");
-
         rebindScreen.SetActive(false);
 
         inputRef.action.Enable();
