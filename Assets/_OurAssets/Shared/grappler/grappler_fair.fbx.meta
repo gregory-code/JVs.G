@@ -79,6 +79,14 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.20437956
+        functionName: Punch
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: 147a9fd4d2493834497b60526b0e32d0,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

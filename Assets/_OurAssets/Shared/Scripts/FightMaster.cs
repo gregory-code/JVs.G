@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class FightMaster : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class FightMaster : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI winnerText;
     [SerializeField] Animator winnerAnimator;
+
+    [SerializeField] GameObject endScreen;
+    [SerializeField] GameObject p1WinEnd;
+    [SerializeField] GameObject p2WinEnd;
 
     CharacterBase p1;
     CharacterBase p2;
@@ -44,6 +49,8 @@ public class FightMaster : MonoBehaviour
     {
         p1 = Instantiate(Grappler, Spawn1.transform.position, Spawn2.transform.rotation);
         p2 = Instantiate(Knight, Spawn2.transform.position, Spawn2.transform.rotation);
+
+        GameObject.Find("FIGHT").GetComponent<AudioSource>().Play();
 
         fightCamera.SetUp(p1, p2);
         menu.GetPlayers(p1, p2);
@@ -126,7 +133,7 @@ public class FightMaster : MonoBehaviour
             if(p1WinCount == 2)
             {
                 p1Wins[1].SetActive(true);
-                fightCamera.GameEnd(true);
+                StartCoroutine(GameOver(true));
             }
 
             if (p1WinCount == 1)
@@ -145,7 +152,7 @@ public class FightMaster : MonoBehaviour
             if (p2WinCount == 2)
             {
                 p2Wins[1].SetActive(true);
-                fightCamera.GameEnd(false);
+                StartCoroutine(GameOver(false));
             }
 
             if (p2WinCount == 1)
@@ -155,5 +162,40 @@ public class FightMaster : MonoBehaviour
                 // next round
             }
         }
+    }
+
+    public void Rematch()
+    {
+        Debug.Log("Da huh?");
+        Time.timeScale = 1;
+        SceneManager.LoadScene(1);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    IEnumerator GameOver(bool whoWon)
+    {
+        if(whoWon)
+        {
+            p1WinEnd.SetActive(true);
+        }
+        else
+        {
+            p2WinEnd.SetActive(true);
+        }
+
+        menu.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(1f);
+        fightCamera.GameEnd(whoWon);
+        yield return new WaitForSeconds(1f);
+        endScreen.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0.01f;
+        Cursor.visible = true;
     }
 }

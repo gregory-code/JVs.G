@@ -48,7 +48,7 @@ public class FightCamera : MonoBehaviour
         {
             if (gameOver)
             {
-                speed = 1;
+                speed = 3f;
                 GameObject playerToLookAt = (p1Wins) ? P1.gameObject : P2.gameObject ;
                 transform.LookAt(playerToLookAt.transform);
                 pos = winnerPos.position;
@@ -62,15 +62,15 @@ public class FightCamera : MonoBehaviour
     {
         if(p1)
         {
+            p1Wins = true;
             gameOver = true;
             winnerPos = P1.winPos;
-            p1Wins = true;
         }
         else
         {
+            p1Wins = false;
             gameOver = true;
             winnerPos = P2.winPos;
-            p1Wins = false;
         }
     }
 

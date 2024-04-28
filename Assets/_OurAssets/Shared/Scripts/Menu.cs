@@ -13,10 +13,10 @@ public class Menu : MonoBehaviour
     int button = 0;
 
     [SerializeField] TextMeshProUGUI[] keybindTexts;
+    [SerializeField] InputActionReference[] actions;
     int currentSelection;
 
     [SerializeField] GameObject rebindScreen;
-    [SerializeField] GameObject endScreen;
 
     CharacterBase P1;
     CharacterBase P2;
@@ -63,6 +63,20 @@ public class Menu : MonoBehaviour
     public void SelectCurrent(int id)
     {
         currentSelection = id;
+    }
+
+    public void Start()
+    {
+        for(int i = 0; i < actions.Length; i++)
+        {
+            int bindingIndex = actions[i].action.GetBindingIndexForControl(actions[i].action.controls[0]);
+
+            string keybind = (InputControlPath.ToHumanReadableString(actions[i].action.bindings[bindingIndex].effectivePath,
+                InputControlPath.HumanReadableStringOptions.OmitDevice));
+
+            keybindTexts[i].text = keybind;
+        }
+
     }
 
     public void Rebind(InputActionReference inputRef)

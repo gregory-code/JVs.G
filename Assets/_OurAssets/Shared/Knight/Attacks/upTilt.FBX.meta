@@ -614,6 +614,14 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.9781022
+        functionName: PlaySound
+        data: land
+        objectReferenceParameter: {fileID: 11400000, guid: fc37a3ddf5882444eb728856b7c17ba2,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

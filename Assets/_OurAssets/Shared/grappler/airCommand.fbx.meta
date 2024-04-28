@@ -57,9 +57,23 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.032900453
+        functionName: AnimStop
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.102668956
         functionName: TryGrab
         data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.2638494
+        functionName: PlaySound
+        data: grabHit
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -72,15 +86,15 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.8374616
-        functionName: AnimGo
-        data: 
+      - time: 0.540146
+        functionName: PlaySound
+        data: crash
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.032900453
-        functionName: AnimStop
+      - time: 0.8374616
+        functionName: AnimGo
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

@@ -466,14 +466,12 @@ public class CharacterBase : MonoBehaviour
             isHoldingDown = true;
             animator.SetBool("crouching", true);
             FindObjectOfType<Menu>().MoveDown();
-            Debug.Log(isHoldingDown);
         }
 
         if (context.canceled)
         {
             isHoldingDown = false;
             animator.SetBool("crouching", false);
-            Debug.Log(isHoldingDown);
         }
     }
 
@@ -556,11 +554,13 @@ public class CharacterBase : MonoBehaviour
 
         if (currentAnimSpeed <= -0.6f && isIncapacitated == false && isGrounded)
         {
+            GameObject.Find("block" + UnityEngine.Random.Range(0, 2)).GetComponent<AudioSource>().Play();
             animator.SetTrigger("guard");
             StartCoroutine(IncapacitatedDuration(0.5f));
             return false;
         }
 
+        GameObject.Find("damaged" + UnityEngine.Random.Range(0, 3)).GetComponent<AudioSource>().Play();
         currentHealth -= damage;
 
         if (currentHealth <= 0)
@@ -589,6 +589,16 @@ public class CharacterBase : MonoBehaviour
         newSlash.transform.localPosition = Vector3.zero;
         GameObject.Find("slice" + UnityEngine.Random.Range(1,4)).GetComponent<AudioSource>().Play();
         Destroy(newSlash, 1);
+    }
+
+    public void Blood()
+    {
+        GameObject.Find("blood" + UnityEngine.Random.Range(1, 4)).GetComponent<AudioSource>().Play();
+    }
+
+    public void Punch()
+    {
+        GameObject.Find("punch" + UnityEngine.Random.Range(0, 3)).GetComponent<AudioSource>().Play();
     }
 
     public void PlaySound(string name)
@@ -678,7 +688,6 @@ public class CharacterBase : MonoBehaviour
             if (hit.GetComponent<CharacterBase>() == otherGuy)
             {
                 gotem = true;
-                Debug.Log("Got em");
                 otherGuy.ApplyGrab();
             }
         }
