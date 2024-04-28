@@ -49,8 +49,8 @@ public class FightCamera : MonoBehaviour
             if (gameOver)
             {
                 speed = 1;
-                Quaternion lookRot = (p1Wins == false) ? Quaternion.LookRotation((P1.transform.position).normalized) : Quaternion.LookRotation((P2.transform.position).normalized);
-                transform.rotation =  Quaternion.Slerp(transform.rotation, lookRot, 1 * Time.deltaTime);
+                GameObject playerToLookAt = (p1Wins) ? P1.gameObject : P2.gameObject ;
+                transform.LookAt(playerToLookAt.transform);
                 pos = winnerPos.position;
             }
 
